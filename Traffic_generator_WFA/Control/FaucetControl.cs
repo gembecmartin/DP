@@ -24,7 +24,7 @@ namespace Traffic_generator_WFA.Control
            {
                 try
                 {
-                   
+                    var url = string.Format(faucetUri, address.Address);
                     var request = (HttpWebRequest)WebRequest.Create(string.Format(faucetUri, address.Address));
                     var response = (HttpWebResponse)request.GetResponse();
                     string responseString;

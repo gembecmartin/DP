@@ -96,17 +96,30 @@ namespace Traffic_generator_WFA.Control
                     //AddTransactionToHistogram(tx);
                     //Console.WriteLine(tx + " Eth");
 
-                    var transferHandler = web3.Eth.GetContractTransactionHandler<TransferFunction>();
-                    var transfer = new TransferFunction()
-                    {
-                        FromAddress = firstAddress,
-                        To = secondAddress,
-                        Value = 10,
-                        Gas = 8000000
-                    };
-                    await transferHandler.SendRequestAsync(walletContract.Address, transfer);
-                    AddTransactionToHistogram(10);
 
+                    try
+                    {
+                        unlockResult = Program.init.web3.Personal.UnlockAccount.SendRequestAsync(firstAddress, Program.init.passwd, 180).GetAwaiter().GetResult();
+                        var transferHandler = web3.Eth.GetContractTransactionHandler<TransferFunction>();
+                        var transfer = new TransferFunction()
+                        {
+                            FromAddress = firstAddress,
+                            To = secondAddress,
+                            Value = 10,
+                            Gas = 8000000
+                        };
+                        await transferHandler.SendRequestAsync(walletContract.Address, transfer);
+                        AddTransactionToHistogram(10);
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.Message.Equals("insufficient funds for gas * price + value"))
+                        {
+                            SendGasFromMain(firstAddress);
+                            continue;
+                        }
+                        else throw ex;
+                    }
 
 
                 }
@@ -263,53 +276,59 @@ namespace Traffic_generator_WFA.Control
         }
 
 
-        /*public async System.Threading.Tasks.Task GetTransactionRangeAsync(long timeFrom)
+        public void SendFundsToMain(string address)
         {
+            BigInteger balance = 0;
 
-
-            object filterParams = new
+            try
             {
-                fromBlock = timeFrom,
-                toBlock = DateTimeOffset.Now.ToUnixTimeSeconds(),
-                //topics = [ERC20["transferEventSignature"]]
-            };
+                var balanceOfFunctionMessage = new BalanceOfFunction()
+                {
+                    Owner = address,
+                };
 
-            NewFilterInput filterParams2 = new NewFilterInput();
-            filterParams2.FromBlock = new BlockParameter(new HexBigInteger(timeFrom));
-            filterParams2.ToBlock = new BlockParameter(new HexBigInteger(DateTimeOffset.Now.ToUnixTimeSeconds()));
+                var balanceHandler = Program.init.web3.Eth.GetContractQueryHandler<BalanceOfFunction>();
+                balance = balanceHandler.QueryAsync<BigInteger>(Program.init.walletContract.Address, balanceOfFunctionMessage).GetAwaiter().GetResult();
 
-            var syncStatus = await Initializer.web3.Eth.Syncing.SendRequestAsync();
-            if (syncStatus.CurrentBlock != syncStatus.HighestBlock)
-            {
-                Console.WriteLine("Last Block: " + syncStatus.HighestBlock.Value);
-                Console.WriteLine("Current Block: " + syncStatus.CurrentBlock.Value);
-                Console.WriteLine(syncStatus.CurrentBlock.Value - syncStatus.HighestBlock.Value);
-                //return;
+                if (balance > 0)
+                {
+                    var unlockResult = Program.init.web3.Personal.UnlockAccount.SendRequestAsync(address, Program.init.passwd, 180).GetAwaiter().GetResult();
+                    var transferHandler = Program.init.web3.Eth.GetContractTransactionHandler<TransferFunction>();
+                    var transfer = new TransferFunction()
+                    {
+                        FromAddress = address,
+                        To = Program.init.masterAcc.Address,
+                        Value = balance,
+                        Gas = 8000000
+                        
+                    };
+                    transferHandler.SendRequestAsync(Program.init.walletContract.Address, transfer).GetAwaiter().GetResult();
+                }
             }
-                
-
-            var filter = await Initializer.web3.Eth.Filters.NewFilter.SendRequestAsync(filterParams2);
-            var list = await Initializer.web3.Eth.Filters.GetFilterLogsForBlockOrTransaction.SendRequestAsync(filter);
-
-            List<string> blockList = new List<string>();
-            HexBigInteger blockNum = await Initializer.web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
-            Console.WriteLine("BlockNum: " + blockNum.Value);
-            while (true)
+            catch (Exception ex)
             {
-                var block = await Initializer.web3.Eth.Blocks.GetBlockWithTransactionsHashesByNumber.SendRequestAsync(new HexBigInteger(blockNum.Value));
-                if (block.Timestamp.Value < timeFrom) break;
-                blockList.AddRange(block.TransactionHashes);
-                blockNum.Value--;
+                if (ex.Message.Equals("insufficient funds for gas * price + value"))
+                {
+                    SendGasFromMain(address);
+                    SendFundsToMain(address);
+                }
+                else throw ex;
             }
-            Console.WriteLine(blockList);
+        }
 
-            foreach (var item in blockList)
+        public void SendGasFromMain(string toAddress) {
+            var web3 = new Web3(new ManagedAccount(Program.init.masterAcc.Address, Program.init.passwd));
+
+            try
             {
-                Transaction rawTransaction = await Initializer.web3.Eth.Transactions.GetTransactionByHash.SendRequestAsync(item);
-                //Console.WriteLine(rawTransaction.Value);
+                var transaction = web3.Eth.GetEtherTransferService()
+                    .TransferEtherAndWaitForReceiptAsync(toAddress, 1).GetAwaiter().GetResult();
             }
-
-        }*/
+            catch(Exception e)
+            {
+                throw e;
+            }
+        }
     }
 
 }

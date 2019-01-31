@@ -1,12 +1,14 @@
 ﻿using DevExpress.XtraCharts;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
+using Nethereum.StandardTokenEIP20.ContractDefinition;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,7 +20,7 @@ namespace Traffic_generator_WFA.Forms
 {
     public partial class MainWindow : XtraForm
     {
-
+        private bool closed = false;
         private HomeControl hc = null;
         Thread updater = null;
         public int tagNum = 1;
@@ -46,7 +48,7 @@ namespace Traffic_generator_WFA.Forms
 
         private void UpdateChart()
         {
-            while (true)
+            while (!closed)
             {
                 if (hc != null)                    
                     hc.SetSeriesActual(Program.init.tc.generatedTransactionHistogram);
@@ -147,6 +149,22 @@ namespace Traffic_generator_WFA.Forms
 
                 }
             }
+        }
+
+        private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
+        }
+
+        private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            closed = true;
+
+            foreach (var acc in Program.init.tc.accList)
+            {
+                Program.init.tc.SendFundsToMain(acc);
+            }
+            
+            Application.Exit();
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Traffic_generator_WFA.Control
         public MainWindow mw;
         public TransactionController tc;
         public FaucetControl fc;
+        public bool loading = false;
 
         private string connectionString = "mongodb://localhost:27017";
         public MongoClient mongoClient;
@@ -290,6 +291,7 @@ namespace Traffic_generator_WFA.Control
                 foreach (var account in accounts)
                 {
                     tc.accList.Add(account.Address);
+                    Thread faucet = new Thread(() => fc.Donate(account));
                 }
                 
             }
@@ -301,6 +303,7 @@ namespace Traffic_generator_WFA.Control
                     var account = await web3.Personal.NewAccount.SendRequestAsync(passwd);
                     await db.GetCollection<MongoAccount>("accounts").InsertOneAsync(new MongoAccount(account));
                     tc.accList.Add(account);
+                    Thread faucet = new Thread(() => fc.Donate(new MongoAccount(account)));
                 });
             }
         }
