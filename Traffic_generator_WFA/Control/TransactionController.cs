@@ -34,8 +34,8 @@ namespace Traffic_generator_WFA.Control
         public bool trafficInitialized = false;
 
         public async Task TransactionSendingAsync(Contract contract, Web3 web3, MongoAccount masterAcc, Contract walletContract, string passwd)
-        {       
-            int scale = 86400 / 86400 * 3;   //one day has 86400 seconds
+        {
+            int scale = 5;//86400 / 86400;   //one day has 86400 seconds
             Random rand = new Random();
             DateTimeOffset nextTransactionTIme = DateTimeOffset.UtcNow.AddSeconds(GetRandomVolume(scale - scale / 2, scale + scale / 2, false));
 
@@ -78,23 +78,46 @@ namespace Traffic_generator_WFA.Control
                 throw e;
             }
 
-            while (true)
+            BigInteger balance = 0;
+            while (!Program.init.appClose)
             {
                 if (DateTimeOffset.UtcNow.CompareTo(nextTransactionTIme) > 0)
                 {
                     //overlapped transaction time -> sending transaction between two contract wallets and setting need new time
-                    var firstAddress = accList[rand.Next(accList.Count)];
-                    var secondAddress = accList[rand.Next(accList.Count)];
-                    do
-                    {
-                        secondAddress = accList[rand.Next(accList.Count)];    //generating new address 
-                    } while (firstAddress == secondAddress);                      //eliminate sending to same contract wallet
-
-                    //nextTransactionTIme = nextTransactionTIme.AddSeconds(scale);
-                    //Console.WriteLine("transaction! ");
                     //var tx = GetRandomVolumeValue();
                     //AddTransactionToHistogram(tx);
                     //Console.WriteLine(tx + " Eth");
+
+                    string firstAddress = null;
+
+                    do {
+                        firstAddress = accList[rand.Next(accList.Count)];  //take random address
+                        try
+                        {
+                            var balanceOfFunctionMessage = new BalanceOfFunction()      //get balance and check, if accound has enough tokens
+                            {
+                                Owner = firstAddress,
+                            };
+
+                            var balanceHandler = web3.Eth.GetContractQueryHandler<BalanceOfFunction>();
+                            balance = await balanceHandler.QueryAsync<BigInteger>(walletContract.Address, balanceOfFunctionMessage);
+                        }
+                        catch (Exception e)
+                        {
+                            throw e;
+                        }
+                    } while (balance < new BigInteger(10));
+
+                    var secondAddress = accList[rand.Next(accList.Count)];
+                    do
+                    {
+                        secondAddress = accList[rand.Next(accList.Count)];    //take random address
+                                               
+                    } while (firstAddress == secondAddress);                      //eliminate sending to same address
+
+                    nextTransactionTIme = nextTransactionTIme.AddSeconds(scale);
+                    //Console.WriteLine("transaction! ");
+                    
 
 
                     try

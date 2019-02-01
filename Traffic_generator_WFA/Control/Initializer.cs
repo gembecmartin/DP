@@ -253,6 +253,8 @@ namespace Traffic_generator_WFA.Control
 
         public MongoAccount masterAcc;
         public Contract walletContract;
+        public Thread transactions;
+        public bool appClose = false;
 
         public async void CreateAccountsAsync(int NoOfAccounts, string address)
         {
@@ -267,7 +269,7 @@ namespace Traffic_generator_WFA.Control
             tc.trafficInitialized = true;
             mw.UpdateView(mw.tagNum);
             
-            Thread transactions = new Thread(() => tc.TransactionSendingAsync(walletContract, web3, masterAcc,walletContract, passwd));
+            transactions = new Thread(() => tc.TransactionSendingAsync(walletContract, web3, masterAcc,walletContract, passwd));
             transactions.Start();
 
             //if (tc.GetMongoTransaction(address) == 0)

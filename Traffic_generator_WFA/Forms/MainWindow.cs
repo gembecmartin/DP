@@ -20,7 +20,6 @@ namespace Traffic_generator_WFA.Forms
 {
     public partial class MainWindow : XtraForm
     {
-        private bool closed = false;
         private HomeControl hc = null;
         Thread updater = null;
         public int tagNum = 1;
@@ -48,7 +47,7 @@ namespace Traffic_generator_WFA.Forms
 
         private void UpdateChart()
         {
-            while (!closed)
+            while (!Program.init.appClose)
             {
                 if (hc != null)                    
                     hc.SetSeriesActual(Program.init.tc.generatedTransactionHistogram);
@@ -157,8 +156,7 @@ namespace Traffic_generator_WFA.Forms
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            closed = true;
-
+            Program.init.appClose = true;
             foreach (var acc in Program.init.tc.accList)
             {
                 Program.init.tc.SendFundsToMain(acc);

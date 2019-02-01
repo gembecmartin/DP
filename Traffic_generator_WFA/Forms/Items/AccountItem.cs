@@ -8,14 +8,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
+using Nethereum.Web3.Accounts;
 
 namespace Traffic_generator_WFA.Forms
 {
     public partial class AccountItem : DevExpress.XtraEditors.XtraUserControl
     {
+        public string AccountName { get; set; }
+        public string Balance { get; set; }
         public AccountItem()
         {
             InitializeComponent();
+        }
+
+        public AccountItem(Account account)
+        {
+            InitializeComponent();
+            //AccountName = account.
         }
 
         private void editFormUserControl2_Load(object sender, EventArgs e)

@@ -244,7 +244,7 @@
     <Compile Include="Forms\WalletControl.Designer.cs">
       <DependentUpon>WalletControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\ExtendedAccount.cs" />
     <Compile Include="Models\Events\TransferEventDTO.cs" />
     <Compile Include="Models\Functions\BalanceOfFunction.cs" />
     <Compile Include="Models\Functions\TransferFunction.cs" />
