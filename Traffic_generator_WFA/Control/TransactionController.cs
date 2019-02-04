@@ -1,4 +1,5 @@
 ﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Nethereum.Contracts;
 using Nethereum.Hex.HexTypes;
@@ -38,52 +39,44 @@ namespace Traffic_generator_WFA.Control
             int scale = 5;//86400 / 86400;   //one day has 86400 seconds
             Random rand = new Random();
             DateTimeOffset nextTransactionTIme = DateTimeOffset.UtcNow.AddSeconds(GetRandomVolume(scale - scale / 2, scale + scale / 2, false));
-
-            
             var mainAccount = new ManagedAccount(masterAcc.Address, passwd);
-            var unlockResult = await web3.Personal.UnlockAccount.SendRequestAsync(mainAccount.Address, mainAccount.Password, 3600000);
+            var unlockResult = await web3.Personal.UnlockAccount.SendRequestAsync(mainAccount.Address, mainAccount.Password, 180);
 
-            //try
-            //{
-            //    var balanceOfFunctionMessage = new BalanceOfFunction()
-            //    {
-            //        Owner = mainAccount.Address,
-            //    };
-
-            //    var balanceHandler = web3.Eth.GetContractQueryHandler<BalanceOfFunction>();
-            //    var balance = await balanceHandler.QueryAsync<BigInteger>(walletContract.Address, balanceOfFunctionMessage);
-            //}
-            //catch (Exception e)
-            //{
-            //    throw e;
-            //}
-
+            #region Initialization
+            HexBigInteger pendingFilter = await web3.Eth.Filters.NewPendingTransactionFilter.SendRequestAsync();        // filter for pending transactions
             try
             {
-                foreach (var acc in accList)
+                foreach (var acc in accList)        //each account gets partial number of tokens from main account
                 {
                     var transferHandler = web3.Eth.GetContractTransactionHandler<TransferFunction>();
-                    var transfer = new TransferFunction()
+                    var transfer = new TransferFunction()       //transaction construction
                     {
                         FromAddress = mainAccount.Address,
                         To = acc,
                         Value = 10,
                         Gas = 8000000
                     };
-                    await transferHandler.SendRequestAsync(walletContract.Address, transfer);
+                    await transferHandler.SendRequestAsync(walletContract.Address, transfer);       //transaction execution on token contract    
                 }
+
+                //FilterLog[] filterChanges = null;
+                //do
+                //{
+                //    filterChanges = await web3.Eth.Filters.GetFilterChangesForEthNewFilter.SendRequestAsync(pendingFilter);  //checking, if all initialization transactions are mined
+                //} while (filterChanges.Length > 0);
             }
             catch (Exception e)
             {
                 throw e;
             }
+            #endregion
 
+            #region Traffic
             BigInteger balance = 0;
             while (!Program.init.appClose)
             {
                 if (DateTimeOffset.UtcNow.CompareTo(nextTransactionTIme) > 0)
                 {
-                    //overlapped transaction time -> sending transaction between two contract wallets and setting need new time
                     //var tx = GetRandomVolumeValue();
                     //AddTransactionToHistogram(tx);
                     //Console.WriteLine(tx + " Eth");
@@ -115,10 +108,7 @@ namespace Traffic_generator_WFA.Control
                                                
                     } while (firstAddress == secondAddress);                      //eliminate sending to same address
 
-                    nextTransactionTIme = nextTransactionTIme.AddSeconds(scale);
-                    //Console.WriteLine("transaction! ");
-                    
-
+                    nextTransactionTIme = nextTransactionTIme.AddSeconds(scale);               
 
                     try
                     {
@@ -143,17 +133,9 @@ namespace Traffic_generator_WFA.Control
                         }
                         else throw ex;
                     }
-
-
                 }
-
-                Thread.Sleep(20);
             }
-        }
-
-        private void ThreadFinished()
-        {
-            //Program.init.loading = false;
+            #endregion
         }
 
         private double CalculateStdDev(IEnumerable<double> values)
@@ -167,18 +149,34 @@ namespace Traffic_generator_WFA.Control
             var filter = new BsonDocument { { "tokenContract", address } };
             var connectionString = "mongodb://localhost:27017";
 
+            /**************************************** Mongo Query ******************************************/
+            //
+            //      db.getCollection('transactions').aggregate(
+            //      [
+            //          { $match: { tokenContract: "0xd26114cd6EE289AccF82350c8d8487fedB8A0C07"} },
+            //          { $group: { _id: "$amount", count: { $sum: 1 } } },
+            //          { $sort: { _id: 1 } }   
+            //      ], { allowDiskUse: true })
+            //
+            /***********************************************************************************************/
+
             try
             {
                 MongoClient client = new MongoClient(connectionString);
                 var db = client.GetDatabase("transaction_data");
-                //transactionList = db.GetCollection<MongoTransaction>("transactions").Find(filter).ToList();
 
-                var ranges = db.GetCollection<MongoTransaction>("transactions").Aggregate()
-                                    .Match(x => x.Address == address)
-                                        .Group(x => x.Amount, group => new { Count = group.Sum(y => y.Amount) }).ToList();
+                var match = new BsonDocument { { "$match", new BsonDocument { { "tokenContract", address } } } };
+                var group = new BsonDocument { { "$group", new BsonDocument { { "_id", "$amount" }, { "count", new BsonDocument { { "$sum", 1} } } } } };
+                var sort = new BsonDocument { { "$sort", new BsonDocument { { "_id", 1} } } };
+                var project = new BsonDocument { { "$project", new BsonDocument { { "amount", "$_id" }, { "count", "$count"} } } };
 
-                //Console.WriteLine("obtained transactions: " + transactionList.Count);
-                //CreateTransactionHistogram();
+                var pipeline = new[] { match, group, sort, project };
+                var coll = db.GetCollection<BsonDocument>("transactions");
+                var result = coll.Aggregate<BsonDocument>(pipeline, new AggregateOptions { AllowDiskUse = true });
+
+                transactionList = result.ToList().Select(x => BsonSerializer.Deserialize<MongoTransaction>(x)).ToList();
+
+                CreateTransactionHistogram();
                 return 0;
             }
             catch (Exception e)
@@ -201,26 +199,31 @@ namespace Traffic_generator_WFA.Control
         {
             double totalProb = 0;
 
+            int totalTx = transactionList.Sum(x => x.Count);
+            double firstQuartile = 0;
+            double thirdQuartile = 0;
+
+            int count = 0;
+            foreach (var value in transactionList)
+            {
+                if (count / totalTx <= 0.25 && (count + value.Count) / totalTx >= 0.25)
+                    firstQuartile = value.Amount;
+                if (count / totalTx <= 0.75 && (count + value.Count) / totalTx >= 0.75)
+                    thirdQuartile = value.Amount;
+                count += value.Count;
+            }
+
             transactionHistogram = new List<HistogramRecord>();
-            transactionList = transactionList.OrderBy(t => t.Amount).ToList();   //order transactions by value
-
-            countHistogram = transactionList.GroupBy(l => l.Amount)     //histogram for display on frontend
-                            .Select(cl => new HistogramRecord
-                            {
-                                Value = cl.Key,
-                                Count = cl.Count(),
-                            }).OrderBy(t => t.Value).ToList();
-
-            var firstQuartile = transactionList.ElementAt(transactionList.Count / 4).Amount;
-            var thirdQuartile = transactionList.ElementAt((transactionList.Count * 3) / 4).Amount;
+            //var firstQuartile = transactionList.ElementAt(totalTx / 4).Amount;
+            //var thirdQuartile = transactionList.ElementAt((totalTx * 3) / 4).Amount;
 
             var interQuartile = thirdQuartile - firstQuartile;          //range between first and third quartile
 
             var transactionRange = transactionList.Last().Amount - transactionList.First().Amount;
-            var deviation = CalculateStdDev(transactionList.Select(x => x.Amount).ToList());
+            //var deviation = CalculateStdDev(transactionList.Select(x => x.Amount).ToList());      //need to repair, if we go back to deviation
 
-            var binNumber = Math.Ceiling(transactionRange / (2 * interQuartile / Math.Pow(transactionList.Count, 1 / 3)));      //Freedman–Diaconis`s rule
-            //var binNumber = Math.Ceiling(transactionRange / (3.5 * deviation / Math.Pow(transactionList.Count, 1 / 3)));      //Scott`s rule
+            var binNumber = Math.Ceiling(transactionRange / (2 * interQuartile / Math.Pow(totalTx, 1 / 3)));      //Freedman–Diaconis`s rule
+            //var binNumber = Math.Ceiling(transactionRange / (3.5 * deviation / Math.Pow(totalTx, 1 / 3)));      //Scott`s rule
 
             for (int i = 0; i < binNumber; i++)
             {
@@ -244,7 +247,7 @@ namespace Traffic_generator_WFA.Control
 
             for (int i = 0; i < ranges.Count; i++)
             {
-                ranges[i].Probability = (double)ranges[i].Count / (double)transactionList.Count;
+                ranges[i].Probability = (double)ranges[i].Count / (double)totalTx;
                 ranges[i].CDFProbability = totalProb + ranges[i].Probability;
                 totalProb = ranges[i].CDFProbability;
             }

@@ -8,20 +8,13 @@ using System.Threading.Tasks;
 
 namespace Traffic_generator_WFA.Models
 {
+    [BsonIgnoreExtraElements]
     public class MongoTransaction
     {
-        public ObjectId Id { get; set; }
-        [BsonElement("address")]
-        public string Address { get; set; }
-        [BsonElement("tokenContract")]
-        public string TokenContract { get; set; }
-        [BsonElement("txhash")]
-        public string Hash { get; set; }
+        [BsonElement("count")]
+        public int Count { get; set; }
         [BsonElement("amount")]
         public double Amount { get; set; }
-        [BsonElement("blockNumber")]
-        public int BlockNumber { get; set; }
-        [BsonElement("type")]
-        public string Type { get; set; }
+
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Traffic_generator_WFA.Models
 {
+    
     public class Range
     {
         public double FromValue { get; set; }

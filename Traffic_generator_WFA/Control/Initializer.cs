@@ -262,25 +262,22 @@ namespace Traffic_generator_WFA.Control
 
             mongoClient = new MongoClient(connectionString);
             web3 = new Web3();
-            //TransactionController.GetMongoTransaction();
+            
             await CreateMasterSmartContractWalletAsync();
             CreateTrafficAccounts(NoOfAccounts);
 
             tc.trafficInitialized = true;
             mw.UpdateView(mw.tagNum);
-            
-            transactions = new Thread(() => tc.TransactionSendingAsync(walletContract, web3, masterAcc,walletContract, passwd));
-            transactions.Start();
 
-            //if (tc.GetMongoTransaction(address) == 0)
-            //{
-            //    tc.trafficInitialized = true;
-            //    mw.UpdateView(mw.tagNum);
-            //    Thread transactions = new Thread(() => tc.TransactionSendingAsync(walletContract));
-            //    transactions.Start();
-            //}
+            if (tc.GetMongoTransaction(address) == 0)
+            {
+                tc.trafficInitialized = true;
+                mw.UpdateView(mw.tagNum);
+                transactions = new Thread(() => tc.TransactionSendingAsync(walletContract, web3, masterAcc, walletContract, passwd));
+                transactions.Start();
+            }
 
-            
+
         }
 
         public void CreateTrafficAccounts(int count)
