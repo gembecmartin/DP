@@ -1,14 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using DevExpress.XtraCharts;
 using Traffic_generator_WFA.Models;
 
 namespace Traffic_generator_WFA.Forms
@@ -95,7 +87,22 @@ namespace Traffic_generator_WFA.Forms
         {
             try
             {
-                chartControl1.Series.BeginUpdate();
+                /*cartesianChart1.Series = new LiveCharts.SeriesCollection
+                {
+                    new LineSeries
+                    {
+                        Values = new ChartValues<double>(ranges.Select(x => x.Probability).ToList()),
+                        Stroke = System.Windows.Media.Brushes.Red,
+                        Fill = System.Windows.Media.Brushes.Red
+                    },
+                    new LineSeries
+                     {
+                        Values = new ChartValues<double>(ranges.Select(x => x.CDFProbability).ToList()),
+                         Stroke = System.Windows.Media.Brushes.Blue,
+                        Fill = System.Windows.Media.Brushes.Blue
+                    },
+                };
+                /*chartControl1.Series.BeginUpdate();
                 chartControl1.Series["PDF"].DataSource = ranges;
                 chartControl1.Series["PDF"].ArgumentDataMember = "Avg";
                 chartControl1.Series["PDF"].ValueDataMembers.AddRange(new string[] { "Probability" });
@@ -105,29 +112,34 @@ namespace Traffic_generator_WFA.Forms
                 double max = Convert.ToDouble(diagram.AxisX.WholeRange.MaxValue);
                 diagram.AxisX.WholeRange.SetMinMaxValues(min, max);
                 diagram.AxisX.WholeRange.AutoSideMargins = false;
-                //diagram.AxisX.WholeRange.SideMarginsValue = 0;
+                //diagram.AxisX.WholeRange.SideMarginsValue = 0;*/
 
             }
             finally
             {
-                chartControl1.Series.EndUpdate();
+                //chartControl1.Series.EndUpdate();
             }
         }
 
         public void SetSeriesCDF(List<Models.Range> ranges)
         {
-            try
-            {
-                chartControl1.Series.BeginUpdate();
-                chartControl1.Series["CDF"].DataSource = ranges;
-                chartControl1.Series["CDF"].ArgumentDataMember = "Avg";
-                chartControl1.Series["CDF"].ValueDataMembers.AddRange(new string[] { "CDFProbability" });
+            //try
+            //{
+            //    chartControl1.Series.BeginUpdate();
+            //    chartControl1.Series["CDF"].DataSource = ranges;
+            //    chartControl1.Series["CDF"].ArgumentDataMember = "Avg";
+            //    chartControl1.Series["CDF"].ValueDataMembers.AddRange(new string[] { "CDFProbability" });
 
-            }
-            finally
-            {
-                chartControl1.Series.EndUpdate();
-            }
+            //}
+            //finally
+            //{
+            //    chartControl1.Series.EndUpdate();
+            //}
+        }
+
+        private void cartesianChart1_ChildChanged(object sender, System.Windows.Forms.Integration.ChildChangedEventArgs e)
+        {
+
         }
     }
 }

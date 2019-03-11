@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Numerics;
@@ -21,6 +22,7 @@ namespace Traffic_generator_WFA.Forms
     public partial class MainWindow : XtraForm
     {
         private HomeControl hc = null;
+        private LoadingControl lc = null;
         Thread updater = null;
         public int tagNum = 1;
 
@@ -51,13 +53,13 @@ namespace Traffic_generator_WFA.Forms
             {
                 if (hc != null)                    
                     hc.SetSeriesActual(Program.init.tc.generatedTransactionHistogram);
-                Thread.Sleep(1000);
+                Thread.Sleep(5000);
             }
         }
 
         private void tileBar1_SelectedItemChanged(object sender, TileItemEventArgs e)
         {
-            int tag = Int16.Parse(e.Item.Tag.ToString());
+            int tag = short.Parse(e.Item.Tag.ToString());
             UpdateView(tag);
         }
 
@@ -78,7 +80,16 @@ namespace Traffic_generator_WFA.Forms
                 panelControl1.Padding = new Padding(0, 103, 0, 0);
                 if (Program.init.loading)
                 {
-                    LoadingControl lc = new LoadingControl();
+                    groupControl1.Controls.Remove(panelControl1);
+                    groupControl1.Controls.Remove(flowLayoutPanel1);
+                    panelControl1 = new PanelControl();
+                    groupControl1.Controls.Add(panelControl1);
+                    panelControl1.Dock = DockStyle.Fill;
+                    panelControl1.AutoSize = true;
+                    panelControl1.Location = new Point(0, 103);
+                    panelControl1.Padding = new Padding(0, 103, 0, 0);
+                    if(lc == null)
+                        lc = new LoadingControl();
                     lc.Dock = DockStyle.Fill;
                     panelControl1.Controls.Add(lc);
                     lc.Location = new Point(0, 0);
@@ -113,7 +124,7 @@ namespace Traffic_generator_WFA.Forms
                         }
                         hc.SetSeriesOriginalDist(Program.init.tc.countHistogram);
                         hc.SetSeriesPDF(Program.init.tc.ranges);
-                        hc.SetSeriesCDF(Program.init.tc.ranges);
+                        //hc.SetSeriesCDF(Program.init.tc.ranges);
                         hc.Location = new Point(0, 0);
                         hc.Dock = DockStyle.Fill;
                         break;
@@ -152,17 +163,59 @@ namespace Traffic_generator_WFA.Forms
 
         private void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
+
         }
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
             Program.init.appClose = true;
-            foreach (var acc in Program.init.tc.accList)
+
+            if (Program.init.web3 != null && Program.init.tc.pendingFilter != null)
             {
-                Program.init.tc.SendFundsToMain(acc);
+                var filterChanges = Program.init.web3.Eth.Filters.GetFilterChangesForBlockOrTransaction.SendRequestAsync(Program.init.tc.pendingFilter).GetAwaiter().GetResult();
+                bool clean = filterChanges.Length == 0 ? true : false;
+                while (!clean)
+                {
+                    clean = true;
+                    foreach (var tx in filterChanges)
+                    {
+                        var receipt = Program.init.web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(tx).GetAwaiter().GetResult();
+                        if (receipt == null)
+                        {
+                            clean = false;
+                            break;
+                        }
+                    }
+                    Thread.Sleep(1000);
+                }
+
+                foreach (var acc in Program.init.tc.accList)
+                {
+                    Program.init.tc.SendTokensToMain(acc);
+                }
             }
-            
+
+            try {
+                var mongoProcesses = Process.GetProcessesByName("mongod");
+                foreach (var p in mongoProcesses)
+                {
+                    p.Kill();
+                    p.WaitForExit();
+                }
+                var gethProcesses = Process.GetProcessesByName("geth");
+                foreach (var p in gethProcesses)
+                {
+                    p.Kill();
+                    p.WaitForExit();
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
             Application.Exit();
+            
         }
     }
 }

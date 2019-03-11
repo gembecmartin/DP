@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using MongoDB.Driver;
+using Nethereum.Web3;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,31 +21,81 @@ namespace Traffic_generator_WFA.Forms
     {
         public GeneratorCreationDialogue()
         {
-            var connectionString = "mongodb://localhost:27017";
-            MongoClient client = new MongoClient(connectionString);
-            var db = client.GetDatabase("transaction_data");
-            var tokenRecords = db.GetCollection<Token>("tokens").Find(_ => true).ToList();
-
-            Program.init.tc = new TransactionController();
-            foreach (var token in tokenRecords)
+            try
             {
-                Program.init.tc.tokenList.Add(token);
+                Program.init.web3 = new Web3();
+
+                var connectionString = "mongodb://localhost:27017";
+                MongoClient client = new MongoClient(connectionString);
+                var db = client.GetDatabase("DP");
+                var tokenRecords = db.GetCollection<Token>("tokens").Find(_ => true).ToList();
+
+                Program.init.tc = new TransactionController();
+                foreach (var token in tokenRecords)
+                {
+                    Program.init.tc.tokenList.Add(token);
+                }
+
+                /*----------------------------------------------------------*/
+                InitializeComponent();
+                backgroundWorker1.DoWork += backgroundWorker1_DoWork;
+                backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+                backgroundWorker1.RunWorkerAsync();
+
+                comboBox1.DataSource = Program.init.tc.tokenList;
+
+                labelControl1.Text = "Node not synced! Syncing in progress.";
+                labelControl1.ForeColor = Color.Red;
+                confirm.Enabled = false;
             }
-            InitializeComponent();
-            comboBox1.DataSource = Program.init.tc.tokenList;
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
 
-        private async void confirm_ClickAsync(object sender, EventArgs e)
+        private async void Confirm_ClickAsync(object sender, EventArgs e)
         {
 
             if (noAccount.Text != "")
             {
-                Program.init.CreateAccountsAsync(Int32.Parse(noAccount.Text), comboBox1.SelectedValue.ToString());
                 Hide();
+                Program.init.contractAddress = comboBox1.SelectedValue.ToString();
+                Program.init.accNo = int.Parse(noAccount.Text);
+
+                Program.init.loading = true;
+                Program.init.mw.UpdateView(Program.init.mw.tagNum);
+
+                //Program.init.CreateAccountsAsync(Int32.Parse(noAccount.Text), comboBox1.SelectedValue.ToString());
+
             }
             else
                 MessageBox.Show("One or more parameters are not filled!\n" +
                     "Fill all parameters and repeat your request.", "Generator missing parameters", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+
+        private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
+        {
+            var web3 = Program.init.web3;
+            var syncing = web3.Eth.Syncing.SendRequestAsync().GetAwaiter().GetResult();
+
+            while (syncing.IsSyncing)
+            {
+                labelControl1.Text = "Node not synced! " + (syncing.HighestBlock.Value - syncing.CurrentBlock.Value) + " blocks remaining";
+            }
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
+        {
+            if (e.Error != null)
+            {
+                MessageBox.Show("Unknown error occured.");
+            }
+            else {
+                labelControl1.Text = "Node synced!";
+                labelControl1.ForeColor = Color.Green;
+                confirm.Enabled = false;
+            }
         }
 
         private void cancel_Click(object sender, EventArgs e)
@@ -89,6 +140,11 @@ namespace Traffic_generator_WFA.Forms
         }
 
         private void label4_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelControl1_Click(object sender, EventArgs e)
         {
 
         }

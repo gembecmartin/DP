@@ -302,11 +302,6 @@
             DevExpress.XtraCharts.UI.ChangePaletteGalleryItem changePaletteGalleryItem47 = new DevExpress.XtraCharts.UI.ChangePaletteGalleryItem();
             DevExpress.XtraCharts.UI.ChangePaletteGalleryItem changePaletteGalleryItem48 = new DevExpress.XtraCharts.UI.ChangePaletteGalleryItem();
             DevExpress.XtraCharts.UI.ChangePaletteGalleryItem changePaletteGalleryItem49 = new DevExpress.XtraCharts.UI.ChangePaletteGalleryItem();
-            DevExpress.XtraCharts.XYDiagram xyDiagram2 = new DevExpress.XtraCharts.XYDiagram();
-            DevExpress.XtraCharts.Series series3 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.SplineSeriesView splineSeriesView1 = new DevExpress.XtraCharts.SplineSeriesView();
-            DevExpress.XtraCharts.Series series4 = new DevExpress.XtraCharts.Series();
-            DevExpress.XtraCharts.SplineSeriesView splineSeriesView2 = new DevExpress.XtraCharts.SplineSeriesView();
             this.chartControl2 = new DevExpress.XtraCharts.ChartControl();
             this.commandBarGalleryDropDown8 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
             this.commandBarGalleryDropDown9 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
@@ -324,7 +319,6 @@
             this.commandBarGalleryDropDown6 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
             this.commandBarGalleryDropDown7 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
             this.HomeControllayoutControl1ConvertedLayout = new DevExpress.XtraLayout.LayoutControl();
-            this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
             this.textEdit3 = new DevExpress.XtraEditors.TextEdit();
@@ -338,7 +332,6 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(series1)).BeginInit();
@@ -362,12 +355,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HomeControllayoutControl1ConvertedLayout)).BeginInit();
             this.HomeControllayoutControl1ConvertedLayout.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(xyDiagram2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(series3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(splineSeriesView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(series4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(splineSeriesView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).BeginInit();
@@ -380,7 +367,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             this.SuspendLayout();
             // 
             // chartControl2
@@ -413,8 +399,8 @@
             this.chartControl2.Legend.Title.Text = "Cumulative distribution function";
             this.chartControl2.Legend.VerticalIndent = 1;
             this.chartControl2.Legend.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            this.chartControl2.Location = new System.Drawing.Point(12, 12);
-            this.chartControl2.Margin = new System.Windows.Forms.Padding(2);
+            this.chartControl2.Location = new System.Drawing.Point(16, 14);
+            this.chartControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.chartControl2.Name = "chartControl2";
             series1.Name = "Generated";
             stepAreaSeriesView1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(141)))), ((int)(((byte)(212)))));
@@ -427,7 +413,7 @@
             this.chartControl2.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1,
         series2};
-            this.chartControl2.Size = new System.Drawing.Size(358, 144);
+            this.chartControl2.Size = new System.Drawing.Size(445, 306);
             this.chartControl2.TabIndex = 1;
             chartTitle1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             chartTitle1.Text = "CDF";
@@ -1674,7 +1660,6 @@
             // HomeControllayoutControl1ConvertedLayout
             // 
             this.editFormUserControl1.SetBoundPropertyName(this.HomeControllayoutControl1ConvertedLayout, "");
-            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.chartControl1);
             this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit1);
             this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit2);
             this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit3);
@@ -1684,83 +1669,49 @@
             this.HomeControllayoutControl1ConvertedLayout.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup2});
             this.HomeControllayoutControl1ConvertedLayout.Location = new System.Drawing.Point(0, 0);
-            this.HomeControllayoutControl1ConvertedLayout.Margin = new System.Windows.Forms.Padding(2);
+            this.HomeControllayoutControl1ConvertedLayout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.HomeControllayoutControl1ConvertedLayout.Name = "HomeControllayoutControl1ConvertedLayout";
-            this.HomeControllayoutControl1ConvertedLayout.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(665, 0, 812, 500);
+            this.HomeControllayoutControl1ConvertedLayout.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(662, 438, 812, 500);
             this.HomeControllayoutControl1ConvertedLayout.Root = this.layoutControlGroup1;
-            this.HomeControllayoutControl1ConvertedLayout.Size = new System.Drawing.Size(518, 271);
+            this.HomeControllayoutControl1ConvertedLayout.Size = new System.Drawing.Size(691, 334);
             this.HomeControllayoutControl1ConvertedLayout.TabIndex = 2;
-            // 
-            // chartControl1
-            // 
-            this.chartControl1.AppearanceNameSerializable = "Light";
-            this.chartControl1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
-            this.editFormUserControl1.SetBoundPropertyName(this.chartControl1, "");
-            xyDiagram2.AxisX.Title.Font = new System.Drawing.Font("Tahoma", 10F);
-            xyDiagram2.AxisX.Title.Text = "Transaction Value";
-            xyDiagram2.AxisX.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            xyDiagram2.AxisX.VisibleInPanesSerializable = "-1";
-            xyDiagram2.AxisY.Title.Font = new System.Drawing.Font("Tahoma", 10F);
-            xyDiagram2.AxisY.Title.Text = "Percentage (%)";
-            xyDiagram2.AxisY.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            xyDiagram2.AxisY.VisibleInPanesSerializable = "-1";
-            xyDiagram2.EnableAxisXScrolling = true;
-            xyDiagram2.EnableAxisXZooming = true;
-            xyDiagram2.EnableAxisYScrolling = true;
-            xyDiagram2.EnableAxisYZooming = true;
-            this.chartControl1.Diagram = xyDiagram2;
-            this.chartControl1.Legend.Name = "Default Legend";
-            this.chartControl1.Location = new System.Drawing.Point(12, 160);
-            this.chartControl1.Margin = new System.Windows.Forms.Padding(2);
-            this.chartControl1.Name = "chartControl1";
-            series3.CrosshairEnabled = DevExpress.Utils.DefaultBoolean.True;
-            series3.CrosshairHighlightPoints = DevExpress.Utils.DefaultBoolean.True;
-            series3.Name = "PDF";
-            series3.View = splineSeriesView1;
-            series4.Name = "CDF";
-            series4.View = splineSeriesView2;
-            this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
-        series3,
-        series4};
-            this.chartControl1.Size = new System.Drawing.Size(358, 99);
-            this.chartControl1.TabIndex = 8;
             // 
             // textEdit1
             // 
             this.editFormUserControl1.SetBoundPropertyName(this.textEdit1, "");
-            this.textEdit1.Location = new System.Drawing.Point(444, 42);
-            this.textEdit1.Margin = new System.Windows.Forms.Padding(2);
+            this.textEdit1.Location = new System.Drawing.Point(555, 51);
+            this.textEdit1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(50, 20);
+            this.textEdit1.Size = new System.Drawing.Size(104, 22);
             this.textEdit1.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit1.TabIndex = 5;
             // 
             // textEdit2
             // 
             this.editFormUserControl1.SetBoundPropertyName(this.textEdit2, "");
-            this.textEdit2.Location = new System.Drawing.Point(444, 66);
-            this.textEdit2.Margin = new System.Windows.Forms.Padding(2);
+            this.textEdit2.Location = new System.Drawing.Point(555, 77);
+            this.textEdit2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textEdit2.Name = "textEdit2";
-            this.textEdit2.Size = new System.Drawing.Size(50, 20);
+            this.textEdit2.Size = new System.Drawing.Size(104, 22);
             this.textEdit2.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit2.TabIndex = 6;
             // 
             // textEdit3
             // 
             this.editFormUserControl1.SetBoundPropertyName(this.textEdit3, "");
-            this.textEdit3.Location = new System.Drawing.Point(444, 90);
-            this.textEdit3.Margin = new System.Windows.Forms.Padding(2);
+            this.textEdit3.Location = new System.Drawing.Point(555, 103);
+            this.textEdit3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textEdit3.Name = "textEdit3";
-            this.textEdit3.Size = new System.Drawing.Size(50, 20);
+            this.textEdit3.Size = new System.Drawing.Size(104, 22);
             this.textEdit3.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit3.TabIndex = 7;
             // 
             // editFormUserControl1
             // 
-            this.editFormUserControl1.Location = new System.Drawing.Point(386, 114);
-            this.editFormUserControl1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.editFormUserControl1.Location = new System.Drawing.Point(483, 129);
+            this.editFormUserControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.editFormUserControl1.Name = "editFormUserControl1";
-            this.editFormUserControl1.Size = new System.Drawing.Size(108, 133);
+            this.editFormUserControl1.Size = new System.Drawing.Size(176, 177);
             this.editFormUserControl1.TabIndex = 4;
             // 
             // layoutControlGroup2
@@ -1779,7 +1730,7 @@
             this.simpleLabelItem1.Name = "simpleLabelItem1";
             this.simpleLabelItem1.Size = new System.Drawing.Size(110, 20);
             this.simpleLabelItem1.Text = "No. of accounts";
-            this.simpleLabelItem1.TextSize = new System.Drawing.Size(76, 13);
+            this.simpleLabelItem1.TextSize = new System.Drawing.Size(92, 16);
             // 
             // layoutControlGroup1
             // 
@@ -1787,10 +1738,9 @@
             this.layoutControlGroup1.GroupBordersVisible = false;
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.chartControl2item,
-            this.layoutControlGroup3,
-            this.layoutControlItem5});
+            this.layoutControlGroup3});
             this.layoutControlGroup1.Name = "Root";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(518, 271);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(691, 334);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // chartControl2item
@@ -1798,7 +1748,7 @@
             this.chartControl2item.Control = this.chartControl2;
             this.chartControl2item.Location = new System.Drawing.Point(0, 0);
             this.chartControl2item.Name = "chartControl2item";
-            this.chartControl2item.Size = new System.Drawing.Size(362, 148);
+            this.chartControl2item.Size = new System.Drawing.Size(451, 310);
             this.chartControl2item.TextSize = new System.Drawing.Size(0, 0);
             this.chartControl2item.TextVisible = false;
             // 
@@ -1809,17 +1759,17 @@
             this.layoutControlItem2,
             this.layoutControlItem3,
             this.layoutControlItem4});
-            this.layoutControlGroup3.Location = new System.Drawing.Point(362, 0);
+            this.layoutControlGroup3.Location = new System.Drawing.Point(451, 0);
             this.layoutControlGroup3.Name = "layoutControlGroup3";
-            this.layoutControlGroup3.Size = new System.Drawing.Size(136, 251);
+            this.layoutControlGroup3.Size = new System.Drawing.Size(214, 310);
             this.layoutControlGroup3.Text = "Traffic properties";
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.editFormUserControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 72);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 78);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(112, 137);
+            this.layoutControlItem1.Size = new System.Drawing.Size(182, 181);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -1828,46 +1778,37 @@
             this.layoutControlItem2.Control = this.textEdit1;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(112, 24);
+            this.layoutControlItem2.Size = new System.Drawing.Size(182, 26);
             this.layoutControlItem2.Text = "Accounts ";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(55, 13);
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(68, 16);
             // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.textEdit2;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 24);
+            this.layoutControlItem3.Location = new System.Drawing.Point(0, 26);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(112, 24);
+            this.layoutControlItem3.Size = new System.Drawing.Size(182, 26);
             this.layoutControlItem3.Text = "Target ICO ";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(55, 13);
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(68, 16);
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.textEdit3;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 48);
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 52);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(112, 24);
+            this.layoutControlItem4.Size = new System.Drawing.Size(182, 26);
             this.layoutControlItem4.Text = "Capital ";
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(55, 13);
-            // 
-            // layoutControlItem5
-            // 
-            this.layoutControlItem5.Control = this.chartControl1;
-            this.layoutControlItem5.Location = new System.Drawing.Point(0, 148);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(362, 103);
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextVisible = false;
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(68, 16);
             // 
             // HomeControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.editFormUserControl1.SetBoundPropertyName(this, "");
             this.Controls.Add(this.HomeControllayoutControl1ConvertedLayout);
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "HomeControl";
-            this.Size = new System.Drawing.Size(518, 271);
+            this.Size = new System.Drawing.Size(691, 334);
             this.Load += new System.EventHandler(this.HomeControl_Load);
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(stepAreaSeriesView1)).EndInit();
@@ -1892,12 +1833,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HomeControllayoutControl1ConvertedLayout)).EndInit();
             this.HomeControllayoutControl1ConvertedLayout.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(xyDiagram2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(splineSeriesView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(series3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(splineSeriesView2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(series4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).EndInit();
@@ -1910,7 +1845,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1946,7 +1880,5 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
-        private DevExpress.XtraCharts.ChartControl chartControl1;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
     }
 }
