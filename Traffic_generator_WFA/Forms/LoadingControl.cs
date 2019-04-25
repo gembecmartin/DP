@@ -14,6 +14,7 @@ namespace Traffic_generator_WFA.Forms
         public int status = 0;
         public LoadingControl()
         {
+            Program.init.mw.loadingProc = true;
             InitializeComponent();
 
             backgroundWorker1.DoWork += backgroundWorker1_DoWork;
@@ -35,15 +36,12 @@ namespace Traffic_generator_WFA.Forms
                 backgroundWorker1.ReportProgress(0);
                 initializer.mongoClient = new MongoClient(connectionString);
 
-                backgroundWorker1.ReportProgress(2);
-                initializer.CreateMasterSmartContractWalletAsync();
-
                 backgroundWorker1.ReportProgress(3);
-                initializer.CreateTrafficAccounts(5);
+                initializer.CreateTrafficAccounts(Program.init.accNo);
 
-                Program.init.tc.GetMongoBlocks(Program.init.contractAddress, Program.init.web3, backgroundWorker1);
+                initializer.tc.GetMongoBlocks(initializer.contractProperties.OriginalTokenAddress, initializer.web3, backgroundWorker1);
 
-                Program.init.tc.GetMongoTransaction(Program.init.contractAddress, backgroundWorker1);
+                initializer.tc.GetMongoTransaction(initializer.contractProperties.OriginalTokenAddress, backgroundWorker1);
 
                 backgroundWorker1.ReportProgress(99);
             }
@@ -64,9 +62,6 @@ namespace Traffic_generator_WFA.Forms
                 case 1:
                     labelControl2.Text = "Syncing node...";
                     break;
-                case 2:
-                    labelControl2.Text = "Setting up main account and ICO...";
-                    break;
                 case 3:
                     labelControl2.Text = "Setting up traffic accounts..."; 
                     break;
@@ -86,17 +81,19 @@ namespace Traffic_generator_WFA.Forms
         }
         private void backgroundWorker1_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
+            Program.init.mw.loadingProc = false;
             if (e.Error != null)
             {
                 MessageBox.Show("Unknown error occured.");
             }
             else
             {
-                Program.init.tc.trafficInitialized = true;
+                Program.init.mw.trafficInitialized = true;
                 Program.init.loading = false;
                 Program.init.mw.UpdateView(Program.init.mw.tagNum);
-                //var transactions = new Thread(() => Program.init.tc.TransactionSendingAsync(Program.init.walletContract, Program.init.web3, Program.init.masterAcc, Program.init.walletContract, Program.init.passwd));
+                //var transactions = new Thread( () => Program.init.tc.TransactionSendingAsync(Program.init.web3, Program.init.contractProperties.Master, Program.init.contractProperties.Address, Program.init.passwd));
                 //transactions.Start();
+               
             }
         }
 

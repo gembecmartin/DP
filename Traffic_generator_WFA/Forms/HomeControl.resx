@@ -6331,4 +6331,7 @@ Use it when it's necessary to show activity bars from different series one above
         W+GiW+GiW+Ey3TF7+D+6h/tyt+svUJAEAzJ3VFQAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="backgroundWorker1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
 </root>

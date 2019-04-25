@@ -16,9 +16,10 @@ namespace Traffic_generator_WFA.Forms
     {
         public string AccountName { get; set; }
         public string Balance { get; set; }
-        public AccountItem()
+        public AccountItem(string address)
         {
             InitializeComponent();
+            
         }
 
         public AccountItem(Account account)

@@ -9,6 +9,9 @@ using Traffic_generator_WFA.Models;
 using Traffic_generator_WFA.Forms;
 using MongoDB.Driver;
 using MongoDB.Bson;
+using Traffic_generator_WFA.Models.Smart_Contract;
+using Nethereum.Util;
+using System.Numerics;
 
 namespace Traffic_generator_WFA.Control
 {
@@ -22,243 +25,18 @@ namespace Traffic_generator_WFA.Control
         private string connectionString = "mongodb://localhost:27017";
         public MongoClient mongoClient;
 
-        public string infuraKey = "t67uC80Gaq8IsJboDBpO";
         public string passwd = "dp1";
         private string _getAddress = "./geth.ipc";
         private string RPC = "http://localhost:8545";
         private Nethereum.JsonRpc.IpcClient.IpcClient ipcClient;
         public Web3 web3;
-        public string abi = @"[
-	{
-		""constant"": false,
-		""inputs"": [
-			{
-				""name"": ""spender"",
-				""type"": ""address""
-			},
-			{
-				""name"": ""value"",
-				""type"": ""uint256""
-			}
-		],
-		""name"": ""approve"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""bool""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""nonpayable"",
-		""type"": ""function""
-	},
-	{
-		""constant"": true,
-		""inputs"": [],
-		""name"": ""totalSupply"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""uint256""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""view"",
-		""type"": ""function""
-	},
-	{
-		""constant"": false,
-		""inputs"": [
-			{
-				""name"": ""from"",
-				""type"": ""address""
-			},
-			{
-				""name"": ""to"",
-				""type"": ""address""
-			},
-			{
-				""name"": ""value"",
-				""type"": ""uint256""
-			}
-		],
-		""name"": ""transferFrom"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""bool""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""nonpayable"",
-		""type"": ""function""
-	},
-	{
-		""constant"": false,
-		""inputs"": [
-			{
-				""name"": ""spender"",
-				""type"": ""address""
-			},
-			{
-				""name"": ""addedValue"",
-				""type"": ""uint256""
-			}
-		],
-		""name"": ""increaseAllowance"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""bool""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""nonpayable"",
-		""type"": ""function""
-	},
-	{
-		""constant"": true,
-		""inputs"": [
-			{
-				""name"": ""owner"",
-				""type"": ""address""
-			}
-		],
-		""name"": ""balanceOf"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""uint256""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""view"",
-		""type"": ""function""
-	},
-	{
-		""constant"": false,
-		""inputs"": [
-			{
-				""name"": ""spender"",
-				""type"": ""address""
-			},
-			{
-				""name"": ""subtractedValue"",
-				""type"": ""uint256""
-			}
-		],
-		""name"": ""decreaseAllowance"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""bool""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""nonpayable"",
-		""type"": ""function""
-	},
-	{
-		""constant"": false,
-		""inputs"": [
-			{
-				""name"": ""to"",
-				""type"": ""address""
-			},
-			{
-				""name"": ""value"",
-				""type"": ""uint256""
-			}
-		],
-		""name"": ""transfer"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""bool""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""nonpayable"",
-		""type"": ""function""
-	},
-	{
-		""constant"": true,
-		""inputs"": [
-			{
-				""name"": ""owner"",
-				""type"": ""address""
-			},
-			{
-				""name"": ""spender"",
-				""type"": ""address""
-			}
-		],
-		""name"": ""allowance"",
-		""outputs"": [
-			{
-				""name"": """",
-				""type"": ""uint256""
-			}
-		],
-		""payable"": false,
-		""stateMutability"": ""view"",
-		""type"": ""function""
-	},
-	{
-		""anonymous"": false,
-		""inputs"": [
-			{
-				""indexed"": true,
-				""name"": ""from"",
-				""type"": ""address""
-			},
-			{
-				""indexed"": true,
-				""name"": ""to"",
-				""type"": ""address""
-			},
-			{
-				""indexed"": false,
-				""name"": ""value"",
-				""type"": ""uint256""
-			}
-		],
-		""name"": ""Transfer"",
-		""type"": ""event""
-	},
-	{
-		""anonymous"": false,
-		""inputs"": [
-			{
-				""indexed"": true,
-				""name"": ""owner"",
-				""type"": ""address""
-			},
-			{
-				""indexed"": true,
-				""name"": ""spender"",
-				""type"": ""address""
-			},
-			{
-				""indexed"": false,
-				""name"": ""value"",
-				""type"": ""uint256""
-			}
-		],
-		""name"": ""Approval"",
-		""type"": ""event""
-	}
-]";
-        public string bytecode = "";
 
         public MongoAccount masterAcc;
-        public Contract walletContract;
-        public Thread transactions;
-        public bool appClose = false;
-        public string contractAddress;
+        public TokenContractProperties contractProperties;
         public int accNo;
+        public string trafficICO = "";
 
-        public async void CreateAccountsAsync(int NoOfAccounts, string address)
+        public async void CreateAccountsAsync(int NoOfAccounts, string address, string selectedAbi)
         {
          
         }
@@ -290,52 +68,80 @@ namespace Traffic_generator_WFA.Control
             }
         }
 
-        public void CreateMasterSmartContractWalletAsync()
+        public void CreateMasterAccount()
         {
-            var db = mongoClient.GetDatabase("DP");
+            var connectionString = "mongodb://localhost:27017";
+            MongoClient client = new MongoClient(connectionString);
+            var db = client.GetDatabase("DP");
             masterAcc = db.GetCollection<MongoAccount>("masterAccounts").Find(_ => true).FirstOrDefault();
-            var smartContract = db.GetCollection<MongoAccount>("smartContracts").Find(_ => true).FirstOrDefault();
 
             if (masterAcc == null)
             {
-                for (int x = 0; x < 2; x++)
-                {
-                    var account = web3.Personal.NewAccount.SendRequestAsync(passwd).GetAwaiter().GetResult();
-                    db.GetCollection<MongoAccount>("masterAccounts").InsertOne( new MongoAccount(account));
-                    masterAcc = new MongoAccount(account);
-                }
+                var account = web3.Personal.NewAccount.SendRequestAsync(passwd).GetAwaiter().GetResult();
+                db.GetCollection<MongoAccount>("masterAccounts").InsertOneAsync(new MongoAccount(account));
+                masterAcc = new MongoAccount(account);
             }
-            
-            Thread faucet = new Thread(() => fc.Donate(masterAcc));
-            
+        }
 
-            if(smartContract == null)
+        public TokenContract CreateNewToken(string abi, string bytecode, string code, string name, TokenProperties properties)
+        {
+            var sup = (properties.Supply * Math.Pow(10, properties.Decimals));
+
+            var mainAccount = web3.Personal.NewAccount.SendRequestAsync(passwd).GetAwaiter().GetResult();
+            Program.init.tc.SendGasFromMain(mainAccount);
+
+            var accValue = web3.Eth.GetBalance.SendRequestAsync(mainAccount).GetAwaiter().GetResult();
+            while (accValue.Value == 0)
             {
-                try
-                {
-                    var unlockResult = web3.Personal.UnlockAccount.SendRequestAsync(masterAcc.Address, passwd, 180).GetAwaiter().GetResult();
-                    var accValue = web3.Eth.GetBalance.SendRequestAsync(masterAcc.Address).GetAwaiter().GetResult();
-                    var transactionHash = web3.Eth.DeployContract.SendRequestAsync(abi, bytecode, masterAcc.Address).GetAwaiter().GetResult();
-                    var receipt = web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(transactionHash).GetAwaiter().GetResult();
-                    while (receipt == null)
-                    {
-                        Thread.Sleep(5000);
-                        receipt = web3.Eth.Transactions.GetTransactionReceipt.SendRequestAsync(transactionHash).GetAwaiter().GetResult();
-                    }
-                    smartContract = new MongoAccount(receipt.ContractAddress);
-                    walletContract = web3.Eth.GetContract(abi, smartContract.Address);
-                    db.GetCollection<MongoAccount>("smartContracts").InsertOne(smartContract);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e.InnerException);
-                }
+                accValue = web3.Eth.GetBalance.SendRequestAsync(mainAccount).GetAwaiter().GetResult();
+                Thread.Sleep(1000);
             }
-            else
+
+            var unlockResult = web3.Personal.UnlockAccount.SendRequestAsync(mainAccount, passwd, 180).GetAwaiter().GetResult();
+            try
             {
-                walletContract = web3.Eth.GetContract(abi, smartContract.Address);
+                StandardTokenDeployment.BYTECODE = bytecode;
+                var tokenDeployResult = new StandardTokenDeployment()
+                {
+                   FromAddress = mainAccount,
+                   TotalSupply = new BigInteger(properties.Supply * Math.Pow(10, properties.Decimals)),
+                   Code = code,
+                   Name = name,
+                   Decimals = properties.Decimals,
+                   Gas = 2000000
+                };
+
+                var deploymentHandler = web3.Eth.GetContractDeploymentHandler<StandardTokenDeployment>();
+                var transactionReceipt = deploymentHandler.SendRequestAndWaitForReceiptAsync(tokenDeployResult).GetAwaiter().GetResult();
+                var contractAddress = transactionReceipt.ContractAddress;
+
+                var contract = new TokenContract();
+                var props = new TokenContractProperties();
+                contract.Name = name;
+                props.Address = contractAddress;
+                props.Code = code;
+                props.Decimals = properties.Decimals;
+                props.Master = mainAccount;
+                props.Supply = properties.Supply;
+                props.OriginalTokenAddress = properties.Address;
+                contract.Properties = props;
+
+                var connectionString = "mongodb://localhost:27017";
+                MongoClient client = new MongoClient(connectionString);
+                var db = client.GetDatabase("DP");
+                db.GetCollection<TokenContract>("smartContracts").InsertOne(contract);
+
+                return contract;
             }
-                
+            catch (Exception ex)
+            {
+                if (ex.Message.Equals("insufficient funds for gas * price + value"))
+                {
+                    Program.init.tc.SendGasFromMain(mainAccount);
+                    return null;
+                }
+                else throw ex;
+            }
         }
     }
 }

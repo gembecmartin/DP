@@ -1,4 +1,6 @@
-﻿namespace Traffic_generator_WFA.Forms
+﻿using DevExpress.XtraCharts;
+
+namespace Traffic_generator_WFA.Forms
 {
     partial class HomeControl
     {
@@ -302,6 +304,14 @@
             DevExpress.XtraCharts.UI.ChangePaletteGalleryItem changePaletteGalleryItem47 = new DevExpress.XtraCharts.UI.ChangePaletteGalleryItem();
             DevExpress.XtraCharts.UI.ChangePaletteGalleryItem changePaletteGalleryItem48 = new DevExpress.XtraCharts.UI.ChangePaletteGalleryItem();
             DevExpress.XtraCharts.UI.ChangePaletteGalleryItem changePaletteGalleryItem49 = new DevExpress.XtraCharts.UI.ChangePaletteGalleryItem();
+            DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions1 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
+            DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions2 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
+            DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions windowsUIButtonImageOptions3 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonImageOptions();
+            DevExpress.XtraCharts.XYDiagram xyDiagram2 = new DevExpress.XtraCharts.XYDiagram();
+            DevExpress.XtraCharts.Series series3 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.StepAreaSeriesView stepAreaSeriesView2 = new DevExpress.XtraCharts.StepAreaSeriesView();
+            DevExpress.XtraCharts.Series series4 = new DevExpress.XtraCharts.Series();
+            DevExpress.XtraCharts.StepLineSeriesView stepLineSeriesView2 = new DevExpress.XtraCharts.StepLineSeriesView();
             this.chartControl2 = new DevExpress.XtraCharts.ChartControl();
             this.commandBarGalleryDropDown8 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
             this.commandBarGalleryDropDown9 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
@@ -319,19 +329,32 @@
             this.commandBarGalleryDropDown6 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
             this.commandBarGalleryDropDown7 = new DevExpress.XtraBars.Commands.CommandBarGalleryDropDown(this.components);
             this.HomeControllayoutControl1ConvertedLayout = new DevExpress.XtraLayout.LayoutControl();
+            this.windowsUIButtonPanel1 = new DevExpress.XtraBars.Docking2010.WindowsUIButtonPanel();
+            this.chartControl1 = new DevExpress.XtraCharts.ChartControl();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
-            this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
             this.textEdit3 = new DevExpress.XtraEditors.TextEdit();
-            this.editFormUserControl1 = new DevExpress.XtraGrid.Views.Grid.EditFormUserControl();
+            this.textEdit4 = new DevExpress.XtraEditors.TextEdit();
+            this.textEdit5 = new DevExpress.XtraEditors.TextEdit();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
             this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.simpleLabelItem1 = new DevExpress.XtraLayout.SimpleLabelItem();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.chartControl2item = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
+            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(series1)).BeginInit();
@@ -355,27 +378,40 @@
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.HomeControllayoutControl1ConvertedLayout)).BeginInit();
             this.HomeControllayoutControl1ConvertedLayout.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(xyDiagram2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(series3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(stepAreaSeriesView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(series4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(stepLineSeriesView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit5.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl2item)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             this.SuspendLayout();
             // 
             // chartControl2
             // 
-            this.chartControl2.AppearanceNameSerializable = "Light";
+            this.chartControl2.AppearanceNameSerializable = "Gray";
             this.chartControl2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.chartControl2.BorderOptions.Color = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(242)))));
             this.chartControl2.BorderOptions.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            this.editFormUserControl1.SetBoundPropertyName(this.chartControl2, "");
             xyDiagram1.AxisX.Color = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             xyDiagram1.AxisX.InterlacedColor = System.Drawing.Color.Black;
             xyDiagram1.AxisX.Title.Font = new System.Drawing.Font("Tahoma", 10F);
@@ -399,9 +435,10 @@
             this.chartControl2.Legend.Title.Text = "Cumulative distribution function";
             this.chartControl2.Legend.VerticalIndent = 1;
             this.chartControl2.Legend.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            this.chartControl2.Location = new System.Drawing.Point(16, 14);
-            this.chartControl2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.chartControl2.Location = new System.Drawing.Point(12, 12);
+            this.chartControl2.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.chartControl2.Name = "chartControl2";
+            this.chartControl2.PaletteBaseColorNumber = 1;
             series1.Name = "Generated";
             stepAreaSeriesView1.Color = System.Drawing.Color.FromArgb(((int)(((byte)(84)))), ((int)(((byte)(141)))), ((int)(((byte)(212)))));
             stepAreaSeriesView1.MarkerVisibility = DevExpress.Utils.DefaultBoolean.False;
@@ -413,9 +450,8 @@
             this.chartControl2.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1,
         series2};
-            this.chartControl2.Size = new System.Drawing.Size(445, 306);
+            this.chartControl2.Size = new System.Drawing.Size(914, 299);
             this.chartControl2.TabIndex = 1;
-            chartTitle1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             chartTitle1.Text = "CDF";
             chartTitle1.TextColor = System.Drawing.Color.Black;
             chartTitle1.Visibility = DevExpress.Utils.DefaultBoolean.False;
@@ -1659,60 +1695,131 @@
             // 
             // HomeControllayoutControl1ConvertedLayout
             // 
-            this.editFormUserControl1.SetBoundPropertyName(this.HomeControllayoutControl1ConvertedLayout, "");
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.windowsUIButtonPanel1);
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.chartControl1);
             this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit1);
-            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit2);
             this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit3);
-            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.editFormUserControl1);
             this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.chartControl2);
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit4);
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit5);
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.simpleButton1);
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.simpleButton2);
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.simpleButton3);
+            this.HomeControllayoutControl1ConvertedLayout.Controls.Add(this.textEdit2);
             this.HomeControllayoutControl1ConvertedLayout.Dock = System.Windows.Forms.DockStyle.Fill;
             this.HomeControllayoutControl1ConvertedLayout.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup2});
             this.HomeControllayoutControl1ConvertedLayout.Location = new System.Drawing.Point(0, 0);
-            this.HomeControllayoutControl1ConvertedLayout.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.HomeControllayoutControl1ConvertedLayout.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.HomeControllayoutControl1ConvertedLayout.Name = "HomeControllayoutControl1ConvertedLayout";
-            this.HomeControllayoutControl1ConvertedLayout.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(662, 438, 812, 500);
+            this.HomeControllayoutControl1ConvertedLayout.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1659, 1030, 1824, 1010);
             this.HomeControllayoutControl1ConvertedLayout.Root = this.layoutControlGroup1;
-            this.HomeControllayoutControl1ConvertedLayout.Size = new System.Drawing.Size(691, 334);
+            this.HomeControllayoutControl1ConvertedLayout.Size = new System.Drawing.Size(1382, 647);
             this.HomeControllayoutControl1ConvertedLayout.TabIndex = 2;
+            // 
+            // windowsUIButtonPanel1
+            // 
+            this.windowsUIButtonPanel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(88)))), ((int)(((byte)(88)))), ((int)(((byte)(88)))));
+            this.windowsUIButtonPanel1.Buttons.AddRange(new DevExpress.XtraEditors.ButtonPanel.IBaseButton[] {
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Start", true, windowsUIButtonImageOptions1, DevExpress.XtraBars.Docking2010.ButtonStyle.CheckButton, "", -1, true, null, true, true, true, "Play", 1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Pause", true, windowsUIButtonImageOptions2, DevExpress.XtraBars.Docking2010.ButtonStyle.CheckButton, "", -1, true, null, true, false, true, "Pause", 1, false),
+            new DevExpress.XtraBars.Docking2010.WindowsUIButton("Stop", true, windowsUIButtonImageOptions3, DevExpress.XtraBars.Docking2010.ButtonStyle.CheckButton, "", -1, true, null, true, false, true, "Stop", 1, false)});
+            this.windowsUIButtonPanel1.ContentAlignment = System.Drawing.ContentAlignment.BottomCenter;
+            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(930, 12);
+            this.windowsUIButtonPanel1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
+            this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
+            this.windowsUIButtonPanel1.Size = new System.Drawing.Size(440, 79);
+            this.windowsUIButtonPanel1.TabIndex = 9;
+            this.windowsUIButtonPanel1.Text = "windowsUIButtonPanel1";
+            this.windowsUIButtonPanel1.ButtonClick += new DevExpress.XtraBars.Docking2010.ButtonEventHandler(this.windowsUIButtonPanel1_ButtonClick);
+            this.windowsUIButtonPanel1.ButtonChecked += new DevExpress.XtraBars.Docking2010.ButtonEventHandler(this.windowsUIButtonPanel1_ButtonChecked);
+            // 
+            // chartControl1
+            // 
+            this.chartControl1.AppearanceNameSerializable = "Light";
+            xyDiagram2.AxisX.Title.Font = new System.Drawing.Font("Tahoma", 10F);
+            xyDiagram2.AxisX.Title.Text = "Transactions in block";
+            xyDiagram2.AxisX.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
+            xyDiagram2.AxisX.VisibleInPanesSerializable = "-1";
+            xyDiagram2.AxisX.WholeRange.AutoSideMargins = false;
+            xyDiagram2.AxisX.WholeRange.SideMarginsValue = 0D;
+            xyDiagram2.AxisY.Title.Font = new System.Drawing.Font("Tahoma", 10F);
+            xyDiagram2.AxisY.Title.Text = "Number of blocks";
+            xyDiagram2.AxisY.Title.Visibility = DevExpress.Utils.DefaultBoolean.True;
+            xyDiagram2.AxisY.VisibleInPanesSerializable = "-1";
+            this.chartControl1.Diagram = xyDiagram2;
+            this.chartControl1.Legend.Name = "Default Legend";
+            this.chartControl1.Location = new System.Drawing.Point(12, 315);
+            this.chartControl1.Margin = new System.Windows.Forms.Padding(6);
+            this.chartControl1.Name = "chartControl1";
+            this.chartControl1.PaletteBaseColorNumber = 1;
+            series3.Name = "Generated";
+            stepAreaSeriesView2.Transparency = ((byte)(0));
+            series3.View = stepAreaSeriesView2;
+            series4.Name = "Original";
+            stepLineSeriesView2.Color = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(150)))), ((int)(((byte)(70)))));
+            series4.View = stepLineSeriesView2;
+            this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
+        series3,
+        series4};
+            this.chartControl1.Size = new System.Drawing.Size(914, 320);
+            this.chartControl1.TabIndex = 8;
             // 
             // textEdit1
             // 
-            this.editFormUserControl1.SetBoundPropertyName(this.textEdit1, "");
-            this.textEdit1.Location = new System.Drawing.Point(555, 51);
-            this.textEdit1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textEdit1.Location = new System.Drawing.Point(1153, 361);
+            this.textEdit1.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(104, 22);
+            this.textEdit1.Size = new System.Drawing.Size(204, 48);
             this.textEdit1.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit1.TabIndex = 5;
             // 
-            // textEdit2
-            // 
-            this.editFormUserControl1.SetBoundPropertyName(this.textEdit2, "");
-            this.textEdit2.Location = new System.Drawing.Point(555, 77);
-            this.textEdit2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textEdit2.Name = "textEdit2";
-            this.textEdit2.Size = new System.Drawing.Size(104, 22);
-            this.textEdit2.StyleController = this.HomeControllayoutControl1ConvertedLayout;
-            this.textEdit2.TabIndex = 6;
-            // 
             // textEdit3
             // 
-            this.editFormUserControl1.SetBoundPropertyName(this.textEdit3, "");
-            this.textEdit3.Location = new System.Drawing.Point(555, 103);
-            this.textEdit3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.textEdit3.Location = new System.Drawing.Point(1153, 257);
+            this.textEdit3.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.textEdit3.Name = "textEdit3";
-            this.textEdit3.Size = new System.Drawing.Size(104, 22);
+            this.textEdit3.Size = new System.Drawing.Size(204, 48);
             this.textEdit3.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit3.TabIndex = 7;
             // 
-            // editFormUserControl1
+            // textEdit4
             // 
-            this.editFormUserControl1.Location = new System.Drawing.Point(483, 129);
-            this.editFormUserControl1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.editFormUserControl1.Name = "editFormUserControl1";
-            this.editFormUserControl1.Size = new System.Drawing.Size(176, 177);
-            this.editFormUserControl1.TabIndex = 4;
+            this.textEdit4.Location = new System.Drawing.Point(1153, 153);
+            this.textEdit4.Name = "textEdit4";
+            this.textEdit4.Size = new System.Drawing.Size(204, 48);
+            this.textEdit4.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.textEdit4.TabIndex = 10;
+            // 
+            // textEdit5
+            // 
+            this.textEdit5.Location = new System.Drawing.Point(1153, 205);
+            this.textEdit5.Name = "textEdit5";
+            this.textEdit5.Size = new System.Drawing.Size(204, 48);
+            this.textEdit5.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.textEdit5.TabIndex = 11;
+            // 
+            // simpleButton1
+            // 
+            this.simpleButton1.Location = new System.Drawing.Point(943, 471);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(414, 54);
+            this.simpleButton1.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.simpleButton1.TabIndex = 12;
+            this.simpleButton1.Text = "Traffic ICO details";
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            // 
+            // simpleButton2
+            // 
+            this.simpleButton2.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.simpleButton2.Appearance.BackColor2 = System.Drawing.Color.Transparent;
+            this.simpleButton2.Location = new System.Drawing.Point(943, 413);
+            this.simpleButton2.Name = "simpleButton2";
+            this.simpleButton2.Size = new System.Drawing.Size(414, 54);
+            this.simpleButton2.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.simpleButton2.TabIndex = 13;
+            this.simpleButton2.Text = "Master account details";
+            this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
             // 
             // layoutControlGroup2
             // 
@@ -1730,7 +1837,7 @@
             this.simpleLabelItem1.Name = "simpleLabelItem1";
             this.simpleLabelItem1.Size = new System.Drawing.Size(110, 20);
             this.simpleLabelItem1.Text = "No. of accounts";
-            this.simpleLabelItem1.TextSize = new System.Drawing.Size(92, 16);
+            this.simpleLabelItem1.TextSize = new System.Drawing.Size(190, 31);
             // 
             // layoutControlGroup1
             // 
@@ -1738,9 +1845,11 @@
             this.layoutControlGroup1.GroupBordersVisible = false;
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.chartControl2item,
-            this.layoutControlGroup3});
+            this.layoutControlGroup3,
+            this.layoutControlItem5,
+            this.layoutControlItem6});
             this.layoutControlGroup1.Name = "Root";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(691, 334);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(1382, 647);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // chartControl2item
@@ -1748,67 +1857,149 @@
             this.chartControl2item.Control = this.chartControl2;
             this.chartControl2item.Location = new System.Drawing.Point(0, 0);
             this.chartControl2item.Name = "chartControl2item";
-            this.chartControl2item.Size = new System.Drawing.Size(451, 310);
+            this.chartControl2item.Size = new System.Drawing.Size(918, 303);
             this.chartControl2item.TextSize = new System.Drawing.Size(0, 0);
             this.chartControl2item.TextVisible = false;
             // 
             // layoutControlGroup3
             // 
             this.layoutControlGroup3.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
+            this.layoutControlItem9,
+            this.layoutControlItem10,
+            this.layoutControlItem4,
             this.layoutControlItem2,
-            this.layoutControlItem3,
-            this.layoutControlItem4});
-            this.layoutControlGroup3.Location = new System.Drawing.Point(451, 0);
+            this.layoutControlItem7,
+            this.layoutControlItem8,
+            this.layoutControlItem1,
+            this.layoutControlItem3});
+            this.layoutControlGroup3.Location = new System.Drawing.Point(918, 83);
             this.layoutControlGroup3.Name = "layoutControlGroup3";
-            this.layoutControlGroup3.Size = new System.Drawing.Size(214, 310);
+            this.layoutControlGroup3.Size = new System.Drawing.Size(444, 544);
             this.layoutControlGroup3.Text = "Traffic properties";
-            // 
-            // layoutControlItem1
-            // 
-            this.layoutControlItem1.Control = this.editFormUserControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 78);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(182, 181);
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem1.TextVisible = false;
+            this.layoutControlGroup3.TextLocation = DevExpress.Utils.Locations.Default;
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.textEdit1;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 208);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(182, 26);
+            this.layoutControlItem2.Size = new System.Drawing.Size(418, 52);
             this.layoutControlItem2.Text = "Accounts ";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(68, 16);
-            // 
-            // layoutControlItem3
-            // 
-            this.layoutControlItem3.Control = this.textEdit2;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 26);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(182, 26);
-            this.layoutControlItem3.Text = "Target ICO ";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(68, 16);
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(207, 31);
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.textEdit3;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 52);
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 104);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(182, 26);
+            this.layoutControlItem4.Size = new System.Drawing.Size(418, 52);
             this.layoutControlItem4.Text = "Capital ";
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(68, 16);
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(207, 31);
+            // 
+            // layoutControlItem7
+            // 
+            this.layoutControlItem7.Control = this.textEdit4;
+            this.layoutControlItem7.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem7.Name = "layoutControlItem7";
+            this.layoutControlItem7.Size = new System.Drawing.Size(418, 52);
+            this.layoutControlItem7.Text = "Traffic ICO name";
+            this.layoutControlItem7.TextSize = new System.Drawing.Size(207, 31);
+            // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.textEdit5;
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 52);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(418, 52);
+            this.layoutControlItem8.Text = "Traffic ICO code";
+            this.layoutControlItem8.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(207, 31);
+            // 
+            // layoutControlItem9
+            // 
+            this.layoutControlItem9.Control = this.simpleButton1;
+            this.layoutControlItem9.Location = new System.Drawing.Point(0, 318);
+            this.layoutControlItem9.Name = "layoutControlItem9";
+            this.layoutControlItem9.Size = new System.Drawing.Size(418, 58);
+            this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem9.TextVisible = false;
+            // 
+            // layoutControlItem10
+            // 
+            this.layoutControlItem10.Control = this.simpleButton2;
+            this.layoutControlItem10.Location = new System.Drawing.Point(0, 260);
+            this.layoutControlItem10.Name = "layoutControlItem10";
+            this.layoutControlItem10.Size = new System.Drawing.Size(418, 58);
+            this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem10.TextVisible = false;
+            // 
+            // layoutControlItem5
+            // 
+            this.layoutControlItem5.Control = this.chartControl1;
+            this.layoutControlItem5.Location = new System.Drawing.Point(0, 303);
+            this.layoutControlItem5.Name = "layoutControlItem5";
+            this.layoutControlItem5.Size = new System.Drawing.Size(918, 324);
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem5.TextVisible = false;
+            // 
+            // layoutControlItem6
+            // 
+            this.layoutControlItem6.Control = this.windowsUIButtonPanel1;
+            this.layoutControlItem6.Location = new System.Drawing.Point(918, 0);
+            this.layoutControlItem6.Name = "layoutControlItem6";
+            this.layoutControlItem6.Size = new System.Drawing.Size(444, 83);
+            this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem6.TextVisible = false;
+            // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
+            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
+            // 
+            // simpleButton3
+            // 
+            this.simpleButton3.Location = new System.Drawing.Point(943, 529);
+            this.simpleButton3.Name = "simpleButton3";
+            this.simpleButton3.Size = new System.Drawing.Size(414, 40);
+            this.simpleButton3.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.simpleButton3.TabIndex = 14;
+            this.simpleButton3.Text = "Target ICO details";
+            this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
+            // 
+            // layoutControlItem1
+            // 
+            this.layoutControlItem1.Control = this.simpleButton3;
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 376);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.Size = new System.Drawing.Size(418, 97);
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem1.TextVisible = false;
+            // 
+            // textEdit2
+            // 
+            this.textEdit2.Location = new System.Drawing.Point(1153, 309);
+            this.textEdit2.Name = "textEdit2";
+            this.textEdit2.Size = new System.Drawing.Size(204, 48);
+            this.textEdit2.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.textEdit2.TabIndex = 15;
+            // 
+            // layoutControlItem3
+            // 
+            this.layoutControlItem3.Control = this.textEdit2;
+            this.layoutControlItem3.Location = new System.Drawing.Point(0, 156);
+            this.layoutControlItem3.Name = "layoutControlItem3";
+            this.layoutControlItem3.Size = new System.Drawing.Size(418, 52);
+            this.layoutControlItem3.Text = "Decimals";
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(207, 31);
             // 
             // HomeControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.editFormUserControl1.SetBoundPropertyName(this, "");
             this.Controls.Add(this.HomeControllayoutControl1ConvertedLayout);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
             this.Name = "HomeControl";
-            this.Size = new System.Drawing.Size(691, 334);
+            this.Size = new System.Drawing.Size(1382, 647);
             this.Load += new System.EventHandler(this.HomeControl_Load);
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(stepAreaSeriesView1)).EndInit();
@@ -1833,18 +2024,32 @@
             ((System.ComponentModel.ISupportInitialize)(this.commandBarGalleryDropDown7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.HomeControllayoutControl1ConvertedLayout)).EndInit();
             this.HomeControllayoutControl1ConvertedLayout.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(xyDiagram2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(stepAreaSeriesView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(series3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(stepLineSeriesView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(series4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chartControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit5.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl2item)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1866,19 +2071,32 @@
         private DevExpress.XtraBars.Commands.CommandBarGalleryDropDown commandBarGalleryDropDown5;
         private DevExpress.XtraBars.Commands.CommandBarGalleryDropDown commandBarGalleryDropDown6;
         private DevExpress.XtraBars.Commands.CommandBarGalleryDropDown commandBarGalleryDropDown7;
-        private DevExpress.XtraGrid.Views.Grid.EditFormUserControl editFormUserControl1;
         private DevExpress.XtraLayout.LayoutControl HomeControllayoutControl1ConvertedLayout;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup2;
         private DevExpress.XtraLayout.SimpleLabelItem simpleLabelItem1;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup1;
         private DevExpress.XtraLayout.LayoutControlItem chartControl2item;
         private DevExpress.XtraLayout.LayoutControlGroup layoutControlGroup3;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraEditors.TextEdit textEdit1;
-        private DevExpress.XtraEditors.TextEdit textEdit2;
         private DevExpress.XtraEditors.TextEdit textEdit3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem4;
+        private ChartControl chartControl1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraBars.Docking2010.WindowsUIButtonPanel windowsUIButtonPanel1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private DevExpress.XtraEditors.TextEdit textEdit4;
+        private DevExpress.XtraEditors.TextEdit textEdit5;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+        private DevExpress.XtraEditors.SimpleButton simpleButton2;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
+        private DevExpress.XtraEditors.SimpleButton simpleButton3;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraEditors.TextEdit textEdit2;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem3;
     }
 }

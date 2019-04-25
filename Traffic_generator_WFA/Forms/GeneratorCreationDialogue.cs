@@ -1,6 +1,11 @@
 ﻿using CsvHelper;
+using DevExpress.XtraEditors;
 using MongoDB.Driver;
+using Nethereum.JsonRpc.Client;
+using Nethereum.RPC.Eth.DTOs;
 using Nethereum.Web3;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +15,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Traffic_generator_WFA.Control;
@@ -19,6 +26,8 @@ namespace Traffic_generator_WFA.Forms
 {
     public partial class GeneratorCreationDialogue : Form
     {
+        public string selectedAbi = "";
+        private List<TokenContract> contractList = new List<TokenContract>();
         public GeneratorCreationDialogue()
         {
             try
@@ -28,21 +37,23 @@ namespace Traffic_generator_WFA.Forms
                 var connectionString = "mongodb://localhost:27017";
                 MongoClient client = new MongoClient(connectionString);
                 var db = client.GetDatabase("DP");
-                var tokenRecords = db.GetCollection<Token>("tokens").Find(_ => true).ToList();
+                var tokenRecords = db.GetCollection<TokenContract>("smartContracts").Find(_ => true).ToList();
 
                 Program.init.tc = new TransactionController();
                 foreach (var token in tokenRecords)
                 {
-                    Program.init.tc.tokenList.Add(token);
+                    contractList.Add(token);
                 }
 
                 /*----------------------------------------------------------*/
                 InitializeComponent();
                 backgroundWorker1.DoWork += backgroundWorker1_DoWork;
                 backgroundWorker1.RunWorkerCompleted += backgroundWorker1_RunWorkerCompleted;
+                backgroundWorker1.ProgressChanged += backgroundWorker1_ReportProgress;
+                backgroundWorker1.WorkerReportsProgress = true;
                 backgroundWorker1.RunWorkerAsync();
 
-                comboBox1.DataSource = Program.init.tc.tokenList;
+                comboBox1.DataSource = contractList;
 
                 labelControl1.Text = "Node not synced! Syncing in progress.";
                 labelControl1.ForeColor = Color.Red;
@@ -60,14 +71,13 @@ namespace Traffic_generator_WFA.Forms
             if (noAccount.Text != "")
             {
                 Hide();
-                Program.init.contractAddress = comboBox1.SelectedValue.ToString();
+                var token = (TokenContract)comboBox1.SelectedItem;
+                Program.init.contractProperties = token.Properties;
                 Program.init.accNo = int.Parse(noAccount.Text);
+                Program.init.trafficICO = token.Name;
 
                 Program.init.loading = true;
                 Program.init.mw.UpdateView(Program.init.mw.tagNum);
-
-                //Program.init.CreateAccountsAsync(Int32.Parse(noAccount.Text), comboBox1.SelectedValue.ToString());
-
             }
             else
                 MessageBox.Show("One or more parameters are not filled!\n" +
@@ -76,12 +86,40 @@ namespace Traffic_generator_WFA.Forms
 
         private void backgroundWorker1_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
-            var web3 = Program.init.web3;
-            var syncing = web3.Eth.Syncing.SendRequestAsync().GetAwaiter().GetResult();
+            SyncingOutput syncing = null;
+            int latest = 0;
+            Web3 web3 = Program.init.web3;
+            latest = int.Parse(web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().GetAwaiter().GetResult().Value.ToString());
+            syncing = web3.Eth.Syncing.SendRequestAsync().GetAwaiter().GetResult();
 
-            while (syncing.IsSyncing)
+            try
             {
-                labelControl1.Text = "Node not synced! " + (syncing.HighestBlock.Value - syncing.CurrentBlock.Value) + " blocks remaining";
+                while (syncing.IsSyncing || latest == 0)
+                {
+                    syncing = web3.Eth.Syncing.SendRequestAsync().GetAwaiter().GetResult();
+                    if (syncing.IsSyncing)
+                        backgroundWorker1.ReportProgress((int)syncing.HighestBlock.Value - (int)syncing.CurrentBlock.Value);
+                    else
+                        backgroundWorker1.ReportProgress(0);
+                    Thread.Sleep(200);
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private void backgroundWorker1_ReportProgress(object sender, System.ComponentModel.ProgressChangedEventArgs e)
+        {
+            switch (e.ProgressPercentage)
+            {
+                case 0:
+                    labelControl1.Text = "Node not synced! \nWaiting for peers";
+                    break;
+                default:
+                    labelControl1.Text = "Node not synced! \n" + e.ProgressPercentage + " blocks remaining";
+                    break;
             }
         }
 
@@ -94,13 +132,13 @@ namespace Traffic_generator_WFA.Forms
             else {
                 labelControl1.Text = "Node synced!";
                 labelControl1.ForeColor = Color.Green;
-                confirm.Enabled = false;
+                confirm.Enabled = true;
             }
         }
 
         private void cancel_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            Hide();
         }
 
         private void fontDialog1_Apply(object sender, EventArgs e)
@@ -147,6 +185,17 @@ namespace Traffic_generator_WFA.Forms
         private void labelControl1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void GeneratorCreationDialogue_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            var addIco = new AddIcoDIalogue(comboBox1);
+            addIco.ShowDialog();
         }
     }
 }

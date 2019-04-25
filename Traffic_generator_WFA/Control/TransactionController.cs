@@ -36,83 +36,107 @@ namespace Traffic_generator_WFA.Control
         public List<HistogramRecord> transactionHistogram = new List<HistogramRecord>();
         public List<HistogramRecord> countHistogram = new List<HistogramRecord>();
         public List<Range> generatedTransactionHistogram = new List<Range>();
+        public List<Range> generatedBlockHistogram = new List<Range>();
+        public List<Range> originalTransactionHistogram = new List<Range>();
+        public List<Range> originalBlockHistogram = new List<Range>();
 
         public List<Range> ranges = new List<Range>();
         public List<Range> blockRanges = new List<Range>();
         public double blockPercentage = 0;
-
-        public bool trafficInitialized = false;
+        
         public HexBigInteger pendingFilter;
 
-        public async Task TransactionSendingAsync(Contract contract, Web3 web3, MongoAccount masterAcc, Contract walletContract, string passwd)
+        public Random randVolume = new Random();
+        public Random randVolumeValue = new Random();
+        public Random randBlock = new Random();
+        public Random randBlockValue = new Random();
+
+        public void TransactionSendingAsync(Web3 web3, string masterAcc, string walletContract, string passwd)
         {
+            //for(var x = 0; x <= 150000; x++)
+            //{
+            //    var blockCount = GetRandomBlockValue();
+            //    AddBlockToHistogram(blockCount);
+            //}
+
+            //for (var x = 0; x <= 200000; x++)
+            //{
+            //    var blockCount = GetRandomVolumeValue();
+            //    AddTransactionToHistogram(blockCount);
+            //}
+
             Random rand = new Random();
             int latestBlock = int.Parse(web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().GetAwaiter().GetResult().Value.ToString());
-            var mainAccount = new ManagedAccount(masterAcc.Address, passwd);
+            var mainAccount = new ManagedAccount(masterAcc, passwd);
 
             #region Traffic
             BigInteger balance = 0;
-            pendingFilter = await web3.Eth.Filters.NewPendingTransactionFilter.SendRequestAsync();
+            pendingFilter = web3.Eth.Filters.NewPendingTransactionFilter.SendRequestAsync().GetAwaiter().GetResult();
 
-            while (!Program.init.appClose)
+            while (!Program.init.mw.hc.trafficStop)
             {
-                var newLatestBlock = int.Parse(web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().GetAwaiter().GetResult().Value.ToString());    //get latest block
-                if (newLatestBlock != latestBlock)                                                                                              //if new block already kicked in...
+                if (Program.init.mw.hc.trafficPlay)
                 {
-                    if (rand.NextDouble() >= blockPercentage)
+                    var newLatestBlock = int.Parse(web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().GetAwaiter().GetResult().Value.ToString());    //get latest block
+                    if (newLatestBlock != latestBlock)                                                                                              //if new block already kicked in...
                     {
-                        var blockCount = GetRandomBlockValue();
-                        for (int i = 0; i < blockCount; i++)
+                        if (rand.NextDouble() <= 0.5) //blockPercentage)
                         {
-                            var tx = GetRandomVolumeValue();
-                            Console.WriteLine(tx + " Eth");
-
-                            string firstAddress = null;
-                            List<string> accs = accList.ToList();
-
-                            do
+                            var blockCount = GetRandomBlockValue();
+                            AddBlockToHistogram(blockCount);
+                            for (int i = 0; i < blockCount; i++)
                             {
-                                if (accs.Count == 0)
-                                {
-                                    firstAddress = masterAcc.Address;
-                                    break;
-                                }
+                                var tx = GetRandomVolumeValue();
+                                Console.WriteLine(tx + " Tokens");
 
-                                firstAddress = accs[rand.Next(accs.Count)];  //take random address
-                                accs.Remove(firstAddress);
-                                try
-                                {
+                                string firstAddress = null;
+                                List<string> accs = accList.ToList();
 
-                                    var balanceOfFunctionMessage = new BalanceOfFunction()      //get balance and check, if accound has enough tokens
+                                do
+                                {
+                                    if (accs.Count == 0)
                                     {
-                                        Owner = firstAddress,
-                                    };
+                                        firstAddress = masterAcc;
+                                        break;
+                                    }
 
-                                    var balanceHandler = web3.Eth.GetContractQueryHandler<BalanceOfFunction>();
-                                    balance = await balanceHandler.QueryAsync<BigInteger>(walletContract.Address, balanceOfFunctionMessage);
-                                }
-                                catch (Exception e)
+                                    firstAddress = accs[rand.Next(accs.Count)];  //take random address
+                                    accs.Remove(firstAddress);
+                                    try
+                                    {
+
+                                        var balanceOfFunctionMessage = new BalanceOfFunction()      //get balance and check, if accound has enough tokens
+                                        {
+                                            Owner = firstAddress,
+                                        };
+
+                                        var balanceHandler = web3.Eth.GetContractQueryHandler<BalanceOfFunction>();
+                                        balance = balanceHandler.QueryAsync<BigInteger>(walletContract, balanceOfFunctionMessage).GetAwaiter().GetResult();
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        throw e;
+                                    }
+                                } while (balance < new BigInteger(tx));
+
+                                var secondAddress = accList[rand.Next(accList.Count)];
+                                do
                                 {
-                                    throw e;
-                                }
-                            } while (balance < new BigInteger(tx));
+                                    secondAddress = accList[rand.Next(accList.Count)];    //take random address
 
-                            var secondAddress = accList[rand.Next(accList.Count)];
-                            do
-                            {
-                                secondAddress = accList[rand.Next(accList.Count)];    //take random address
-
-                            } while (firstAddress == secondAddress);                      //eliminate sending to same address
-                            SendTokens(firstAddress, secondAddress, tx);
+                                } while (firstAddress == secondAddress);                      //eliminate sending to same address
+                                SendTokens(firstAddress, secondAddress, tx);
+                            }
                         }
-
                         latestBlock = newLatestBlock;
                     }
                 }
                 else
-                    Thread.Sleep(500);
+                    Thread.Sleep(200);
             }
             #endregion
+
+            Program.init.mw.trafficInitialized = false;
         }
 
         private double CalculateStdDev(List<MongoTransactionCount> values, int totalTx)
@@ -265,7 +289,7 @@ namespace Traffic_generator_WFA.Control
             var interQuartile = thirdQuartile - firstQuartile;
 
             var transactionRange = transactionList.Last().Amount - transactionList.First().Amount;
-            var deviation = CalculateStdDev(transactionList, totalTx);      //need to repair, if we go back to deviation
+            var deviation = CalculateStdDev(transactionList, totalTx);
 
             var binNumber2 = Math.Ceiling(transactionRange / (2 * interQuartile / Math.Pow(totalTx, 1 / 3.0)));      //Freedman–Diaconis`s rule
             var binNumber = Math.Ceiling(transactionRange / (3.5 * deviation / Math.Pow(totalTx, 1 / 3.0)));      //Scott`s rule
@@ -279,9 +303,6 @@ namespace Traffic_generator_WFA.Control
                 bin.Avg = (bin.FromValue + bin.ToValue) / 2;
 
                 ranges.Add(bin);
-
-                var generatorBin = new Range(bin.FromValue, bin.ToValue, bin.Avg, bin.Probability, bin.CDFProbability);
-                generatedTransactionHistogram.Add(generatorBin);
             }
 
             foreach (var transaction in transactionList)
@@ -297,6 +318,19 @@ namespace Traffic_generator_WFA.Control
                 ranges[i].CDFProbability = totalProb + ranges[i].Probability;
                 totalProb = ranges[i].CDFProbability;
             }
+
+            var newRanges = new List<Range>();
+            foreach (var range in ranges)
+            {
+                if (range.Count != 0)
+                {
+                    newRanges.Add(range);
+                    var generatorBin = new Range(range.FromValue, range.ToValue, range.Avg, range.Probability, range.CDFProbability);
+                    generatedTransactionHistogram.Add(generatorBin);
+                }
+            }
+
+            ranges = newRanges.ToList();
         }
 
         public void CreateBlockHistogram()
@@ -339,9 +373,6 @@ namespace Traffic_generator_WFA.Control
                 bin.ToValue = Math.Round((totalBlockRange / binNumber) * (i + 1));
                 bin.Avg = (bin.FromValue + bin.ToValue) / 2;
                 blockRanges.Add(bin);
-
-                var generatorBin = new Range(bin.FromValue, bin.ToValue, bin.Avg, bin.Probability, bin.CDFProbability);
-                generatedTransactionHistogram.Add(generatorBin);
             }
 
             foreach (var transaction in blockList)
@@ -359,6 +390,19 @@ namespace Traffic_generator_WFA.Control
                 blockRanges[i].CDFProbability = totalProb + blockRanges[i].Probability;
                 totalProb = blockRanges[i].CDFProbability;
             }
+
+            var newBlockRanges = new List<Range>();
+            foreach (var range in blockRanges)
+            {
+                if (range.Count != 0)
+                {
+                    newBlockRanges.Add(range);
+                    var generatorBin = new Range(range.FromValue, range.ToValue, range.Avg, range.Probability, range.CDFProbability);
+                    generatedBlockHistogram.Add(generatorBin);
+                }
+            }
+
+            blockRanges = newBlockRanges.ToList();
         }
 
         public void AddTransactionToHistogram(double value)
@@ -373,12 +417,21 @@ namespace Traffic_generator_WFA.Control
             }         
         }
 
+        public void AddBlockToHistogram(double value)
+        {
+            foreach (var bin in generatedBlockHistogram)
+            {
+                if (value > bin.FromValue && value <= bin.ToValue)
+                {
+                    bin.Count++;
+                    break;
+                }
+            }
+        }
+
         public double GetRandomBlockValue()
         {
-            bool isDouble = false;
-
-            Random rand = new Random();
-            double randVal = rand.NextDouble();
+            double randVal = randBlockValue.NextDouble();
 
             Range range = null;
             double sumProb = 0;
@@ -390,20 +443,14 @@ namespace Traffic_generator_WFA.Control
                     break;
             }
 
-            range.Count++;
-            return GetRandomVolume(range.FromValue, range.ToValue, isDouble);
+            //range.Count++;
+            return GetRandomBlock(range.FromValue, range.ToValue);
         }
 
         public double GetRandomVolumeValue()
         {
-            bool isDouble = true;
-            Random formatChooser = new Random();
-            double formatVal = formatChooser.NextDouble();
-            if (formatVal <= 0.35)
-                isDouble = false;
-
-            Random rand = new Random();
-            double randVal = rand.NextDouble();
+            
+            double randVal = randVolumeValue.NextDouble();
 
             Range range = null;
             double sumProb = 0;
@@ -412,22 +459,25 @@ namespace Traffic_generator_WFA.Control
                 sumProb += item.Probability;
                 range = item;
                 if (sumProb >= randVal)
-                    break;
-                    
+                    break; 
             }
 
-            range.Count++;
-            return GetRandomVolume(range.FromValue, range.ToValue, isDouble);
+            return GetRandomVolume(range.FromValue, range.ToValue);
         }
 
-        public double GetRandomVolume(double minimum, double maximum, bool isDouble)
+        public double GetRandomVolume(double minimum, double maximum)
         {
-            Random random = new Random();
-            double value = random.NextDouble() * (maximum - minimum) + minimum;
-            if (isDouble || value < 1)
-                return value;
-            else
-                return Math.Ceiling(value);
+            double value = randVolume.NextDouble() * (maximum - minimum) + minimum;
+  
+            return Math.Ceiling(value);
+        }
+
+        public double GetRandomBlock(double minimum, double maximum)
+        {
+            
+            double value = randBlock.NextDouble() * (maximum - minimum) + minimum;
+
+            return Math.Round(value);
         }
 
         public void SendTokens(string from, string to, double value)
@@ -442,9 +492,11 @@ namespace Traffic_generator_WFA.Control
                     FromAddress = from,
                     To = to,
                     Value = (int)value,
-                    Gas = 8000000
+                    GasPrice = Web3.Convert.ToWei(20, UnitConversion.EthUnit.Gwei),
+                    Gas = 80000
                 };
-                transferHandler.SendRequestAsync(Program.init.walletContract.Address, transfer).GetAwaiter().GetResult();
+                //transfer.Gas = transferHandler.EstimateGasAsync(from, transfer).GetAwaiter().GetResult().Value;
+                transferHandler.SendRequestAsync(Program.init.contractProperties.Address, transfer);
                 AddTransactionToHistogram(value);
             }
             catch (Exception ex)
@@ -469,7 +521,7 @@ namespace Traffic_generator_WFA.Control
                 };
 
                 var balanceHandler = Program.init.web3.Eth.GetContractQueryHandler<BalanceOfFunction>();
-                balance = balanceHandler.QueryAsync<BigInteger>(Program.init.walletContract.Address, balanceOfFunctionMessage).GetAwaiter().GetResult();
+                balance = balanceHandler.QueryAsync<BigInteger>(Program.init.contractProperties.Address, balanceOfFunctionMessage).GetAwaiter().GetResult();
 
                 if (balance > 0)
                 {
@@ -483,15 +535,16 @@ namespace Traffic_generator_WFA.Control
                         Gas = 8000000
                         
                     };
-                    transferHandler.SendRequestAsync(Program.init.walletContract.Address, transfer).GetAwaiter().GetResult();
+                    transferHandler.SendRequestAsync(Program.init.contractProperties.Address, transfer).GetAwaiter().GetResult();
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine("Error!!");
                 if (ex.Message.Equals("insufficient funds for gas * price + value"))
                 {
                     SendGasFromMain(address);
-                    SendTokensToMain(address);
+                    //SendTokensToMain(address);
                 }
                 else throw ex;
             }

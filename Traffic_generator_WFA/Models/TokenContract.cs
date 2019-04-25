@@ -8,18 +8,21 @@ using System.Threading.Tasks;
 namespace Traffic_generator_WFA.Models
 {
     [BsonIgnoreExtraElements]
-    public class Token
+    public class TokenContract
     {
+
         [BsonElement("name")]
         public string Name { get; set; }
-        [BsonElement("properties")]
-        public TokenProperties Properties { get; set; }
 
+        [BsonElement("properties")]
+        public TokenContractProperties Properties {get; set; }
     }
 
     [BsonIgnoreExtraElements]
-    public class TokenProperties
+    public class TokenContractProperties
     {
+        [BsonElement("master")]
+        public string Master { get; set; }
         [BsonElement("code")]
         public string Code { get; set; }
         [BsonElement("address")]
@@ -28,5 +31,7 @@ namespace Traffic_generator_WFA.Models
         public int Decimals { get; set; }
         [BsonElement("supply")]
         public double Supply { get; set; }
+        [BsonElement("originalTokenAddress")]
+        public string OriginalTokenAddress { get; set; }
     }
 }

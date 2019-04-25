@@ -18,10 +18,13 @@ namespace Traffic_generator_WFA
         [STAThread]
         static void Main()
         {
+            var appFolder = AppDomain.CurrentDomain.BaseDirectory;
+            Console.WriteLine(appFolder);
+
             Process mongo = new Process();
             ProcessStartInfo mongoInfo = new ProcessStartInfo();
             mongoInfo.FileName = "cmd.exe";
-            mongoInfo.Arguments = "/C C:\\MongoDB\\mongod.exe --dbpath D:\\mongo_db\\data";
+            mongoInfo.Arguments = "/C C:\\MongoDB\\mongod.exe --dbpath " + appFolder + "mongo_db\\data";
             mongo.StartInfo = mongoInfo;
             mongo.Start();
 

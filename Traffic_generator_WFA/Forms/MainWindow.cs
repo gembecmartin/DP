@@ -21,14 +21,17 @@ namespace Traffic_generator_WFA.Forms
 {
     public partial class MainWindow : XtraForm
     {
-        private HomeControl hc = null;
+        public HomeControl hc = null;
         private LoadingControl lc = null;
         Thread updater = null;
         public int tagNum = 1;
+        public bool trafficInitialized = false;
+        public bool loadingProc = false;
 
         public MainWindow()
         {
             InitializeComponent();
+            Program.init.CreateMasterAccount();
             tileBar1.SelectedItem = tileBarItem1;
         }
 
@@ -49,10 +52,10 @@ namespace Traffic_generator_WFA.Forms
 
         private void UpdateChart()
         {
-            while (!Program.init.appClose)
+            while (!hc.trafficStop)
             {
                 if (hc != null)                    
-                    hc.SetSeriesActual(Program.init.tc.generatedTransactionHistogram);
+                    hc.SetSeriesActual(Program.init.tc.generatedTransactionHistogram, Program.init.tc.generatedBlockHistogram);
                 Thread.Sleep(5000);
             }
         }
@@ -67,7 +70,7 @@ namespace Traffic_generator_WFA.Forms
         {
             tagNum = tag;
             
-            if (!Program.init.tc.trafficInitialized)
+            if (!trafficInitialized)
             {
                 groupControl1.Controls.Remove(panelControl1);
                 groupControl1.Controls.Remove(flowLayoutPanel1);
@@ -78,7 +81,7 @@ namespace Traffic_generator_WFA.Forms
                 panelControl1.AutoSize = true;
                 panelControl1.Location = new Point(0, 103);
                 panelControl1.Padding = new Padding(0, 103, 0, 0);
-                if (Program.init.loading)
+                if (loadingProc)
                 {
                     groupControl1.Controls.Remove(panelControl1);
                     groupControl1.Controls.Remove(flowLayoutPanel1);
@@ -88,8 +91,21 @@ namespace Traffic_generator_WFA.Forms
                     panelControl1.AutoSize = true;
                     panelControl1.Location = new Point(0, 103);
                     panelControl1.Padding = new Padding(0, 103, 0, 0);
-                    if(lc == null)
-                        lc = new LoadingControl();
+                    lc.Dock = DockStyle.Fill;
+                    panelControl1.Controls.Add(lc);
+                    lc.Location = new Point(0, 0);
+                }
+                else if (Program.init.loading)
+                {
+                    groupControl1.Controls.Remove(panelControl1);
+                    groupControl1.Controls.Remove(flowLayoutPanel1);
+                    panelControl1 = new PanelControl();
+                    groupControl1.Controls.Add(panelControl1);
+                    panelControl1.Dock = DockStyle.Fill;
+                    panelControl1.AutoSize = true;
+                    panelControl1.Location = new Point(0, 103);
+                    panelControl1.Padding = new Padding(0, 103, 0, 0);
+                    lc = new LoadingControl();
                     lc.Dock = DockStyle.Fill;
                     panelControl1.Controls.Add(lc);
                     lc.Location = new Point(0, 0);
@@ -117,13 +133,13 @@ namespace Traffic_generator_WFA.Forms
                         panelControl1.Padding = new Padding(0, 103, 0, 0);
                         hc = new HomeControl();
                         panelControl1.Controls.Add(hc);
-                        if (updater == null)
-                        {
-                            updater = new Thread(UpdateChart);
-                            updater.Start();
-                        }
-                        hc.SetSeriesOriginalDist(Program.init.tc.countHistogram);
-                        hc.SetSeriesPDF(Program.init.tc.ranges);
+
+                        updater = new Thread(UpdateChart);
+                        updater.Start();
+                        
+                        hc.SetSeriesOriginalDist(Program.init.tc.ranges);
+                        hc.SetSeriesOriginalBlockDist(Program.init.tc.blockRanges);
+                        //hc.SetSeriesPDF(Program.init.tc.ranges);
                         //hc.SetSeriesCDF(Program.init.tc.ranges);
                         hc.Location = new Point(0, 0);
                         hc.Dock = DockStyle.Fill;
@@ -136,11 +152,11 @@ namespace Traffic_generator_WFA.Forms
                         flowLayoutPanel1.AutoScroll = true;
                         flowLayoutPanel1.Padding = new Padding(0, 103, 0, 0);
                         flowLayoutPanel1.Dock = DockStyle.Fill;
-                        //for (int i = 0; i < 100; i++)
-                        //{
-                        //    AccountItem ai = new AccountItem();
-                        //    flowLayoutPanel1.Controls.Add(ai);
-                        //}
+                        foreach (var address in Program.init.tc.accList)
+                        {
+                            AccountItem ai = new AccountItem(address);
+                            flowLayoutPanel1.Controls.Add(ai);
+                        }
                         break;
                     case 3:
                         groupControl1.Controls.Remove(panelControl1);
@@ -168,7 +184,7 @@ namespace Traffic_generator_WFA.Forms
 
         private void MainWindow_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Program.init.appClose = true;
+            hc.trafficStop = true;
 
             if (Program.init.web3 != null && Program.init.tc.pendingFilter != null)
             {
