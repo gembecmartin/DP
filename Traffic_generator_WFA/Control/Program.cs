@@ -24,7 +24,7 @@ namespace Traffic_generator_WFA
             Process mongo = new Process();
             ProcessStartInfo mongoInfo = new ProcessStartInfo();
             mongoInfo.FileName = "cmd.exe";
-            mongoInfo.Arguments = "/C C:\\MongoDB\\mongod.exe --dbpath " + appFolder + "mongo_db\\data";
+            mongoInfo.Arguments = "/C C:\\MongoDB\\mongod.exe --dbpath \"" + appFolder + "mongo_db\\data\"";
             mongo.StartInfo = mongoInfo;
             mongo.Start();
 

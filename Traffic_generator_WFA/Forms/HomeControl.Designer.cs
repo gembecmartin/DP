@@ -337,24 +337,24 @@ namespace Traffic_generator_WFA.Forms
             this.textEdit5 = new DevExpress.XtraEditors.TextEdit();
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.simpleButton2 = new DevExpress.XtraEditors.SimpleButton();
+            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
+            this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
             this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.simpleLabelItem1 = new DevExpress.XtraLayout.SimpleLabelItem();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.chartControl2item = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlGroup3 = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.simpleButton3 = new DevExpress.XtraEditors.SimpleButton();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.textEdit2 = new DevExpress.XtraEditors.TextEdit();
-            this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(series1)).BeginInit();
@@ -388,22 +388,22 @@ namespace Traffic_generator_WFA.Forms
             ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit5.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl2item)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             this.SuspendLayout();
             // 
             // chartControl2
@@ -435,8 +435,8 @@ namespace Traffic_generator_WFA.Forms
             this.chartControl2.Legend.Title.Text = "Cumulative distribution function";
             this.chartControl2.Legend.VerticalIndent = 1;
             this.chartControl2.Legend.Visibility = DevExpress.Utils.DefaultBoolean.True;
-            this.chartControl2.Location = new System.Drawing.Point(12, 12);
-            this.chartControl2.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.chartControl2.Location = new System.Drawing.Point(5, 5);
+            this.chartControl2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.chartControl2.Name = "chartControl2";
             this.chartControl2.PaletteBaseColorNumber = 1;
             series1.Name = "Generated";
@@ -450,7 +450,7 @@ namespace Traffic_generator_WFA.Forms
             this.chartControl2.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series1,
         series2};
-            this.chartControl2.Size = new System.Drawing.Size(914, 299);
+            this.chartControl2.Size = new System.Drawing.Size(330, 128);
             this.chartControl2.TabIndex = 1;
             chartTitle1.Text = "CDF";
             chartTitle1.TextColor = System.Drawing.Color.Black;
@@ -1710,11 +1710,11 @@ namespace Traffic_generator_WFA.Forms
             this.HomeControllayoutControl1ConvertedLayout.HiddenItems.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlGroup2});
             this.HomeControllayoutControl1ConvertedLayout.Location = new System.Drawing.Point(0, 0);
-            this.HomeControllayoutControl1ConvertedLayout.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.HomeControllayoutControl1ConvertedLayout.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.HomeControllayoutControl1ConvertedLayout.Name = "HomeControllayoutControl1ConvertedLayout";
             this.HomeControllayoutControl1ConvertedLayout.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1659, 1030, 1824, 1010);
             this.HomeControllayoutControl1ConvertedLayout.Root = this.layoutControlGroup1;
-            this.HomeControllayoutControl1ConvertedLayout.Size = new System.Drawing.Size(1382, 647);
+            this.HomeControllayoutControl1ConvertedLayout.Size = new System.Drawing.Size(518, 271);
             this.HomeControllayoutControl1ConvertedLayout.TabIndex = 2;
             // 
             // windowsUIButtonPanel1
@@ -1725,10 +1725,10 @@ namespace Traffic_generator_WFA.Forms
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Pause", true, windowsUIButtonImageOptions2, DevExpress.XtraBars.Docking2010.ButtonStyle.CheckButton, "", -1, true, null, true, false, true, "Pause", 1, false),
             new DevExpress.XtraBars.Docking2010.WindowsUIButton("Stop", true, windowsUIButtonImageOptions3, DevExpress.XtraBars.Docking2010.ButtonStyle.CheckButton, "", -1, true, null, true, false, true, "Stop", 1, false)});
             this.windowsUIButtonPanel1.ContentAlignment = System.Drawing.ContentAlignment.BottomCenter;
-            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(930, 12);
-            this.windowsUIButtonPanel1.Margin = new System.Windows.Forms.Padding(3, 3, 3, 20);
+            this.windowsUIButtonPanel1.Location = new System.Drawing.Point(337, 5);
+            this.windowsUIButtonPanel1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 8);
             this.windowsUIButtonPanel1.Name = "windowsUIButtonPanel1";
-            this.windowsUIButtonPanel1.Size = new System.Drawing.Size(440, 79);
+            this.windowsUIButtonPanel1.Size = new System.Drawing.Size(159, 55);
             this.windowsUIButtonPanel1.TabIndex = 9;
             this.windowsUIButtonPanel1.Text = "windowsUIButtonPanel1";
             this.windowsUIButtonPanel1.ButtonClick += new DevExpress.XtraBars.Docking2010.ButtonEventHandler(this.windowsUIButtonPanel1_ButtonClick);
@@ -1749,8 +1749,8 @@ namespace Traffic_generator_WFA.Forms
             xyDiagram2.AxisY.VisibleInPanesSerializable = "-1";
             this.chartControl1.Diagram = xyDiagram2;
             this.chartControl1.Legend.Name = "Default Legend";
-            this.chartControl1.Location = new System.Drawing.Point(12, 315);
-            this.chartControl1.Margin = new System.Windows.Forms.Padding(6);
+            this.chartControl1.Location = new System.Drawing.Point(5, 135);
+            this.chartControl1.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.chartControl1.Name = "chartControl1";
             this.chartControl1.PaletteBaseColorNumber = 1;
             series3.Name = "Generated";
@@ -1762,48 +1762,51 @@ namespace Traffic_generator_WFA.Forms
             this.chartControl1.SeriesSerializable = new DevExpress.XtraCharts.Series[] {
         series3,
         series4};
-            this.chartControl1.Size = new System.Drawing.Size(914, 320);
+            this.chartControl1.Size = new System.Drawing.Size(330, 137);
             this.chartControl1.TabIndex = 8;
             // 
             // textEdit1
             // 
-            this.textEdit1.Location = new System.Drawing.Point(1153, 361);
-            this.textEdit1.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.textEdit1.Location = new System.Drawing.Point(423, 174);
+            this.textEdit1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textEdit1.Name = "textEdit1";
-            this.textEdit1.Size = new System.Drawing.Size(204, 48);
+            this.textEdit1.Size = new System.Drawing.Size(68, 20);
             this.textEdit1.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit1.TabIndex = 5;
             // 
             // textEdit3
             // 
-            this.textEdit3.Location = new System.Drawing.Point(1153, 257);
-            this.textEdit3.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.textEdit3.Location = new System.Drawing.Point(423, 130);
+            this.textEdit3.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textEdit3.Name = "textEdit3";
-            this.textEdit3.Size = new System.Drawing.Size(204, 48);
+            this.textEdit3.Size = new System.Drawing.Size(68, 20);
             this.textEdit3.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit3.TabIndex = 7;
             // 
             // textEdit4
             // 
-            this.textEdit4.Location = new System.Drawing.Point(1153, 153);
+            this.textEdit4.Location = new System.Drawing.Point(423, 86);
+            this.textEdit4.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.textEdit4.Name = "textEdit4";
-            this.textEdit4.Size = new System.Drawing.Size(204, 48);
+            this.textEdit4.Size = new System.Drawing.Size(68, 20);
             this.textEdit4.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit4.TabIndex = 10;
             // 
             // textEdit5
             // 
-            this.textEdit5.Location = new System.Drawing.Point(1153, 205);
+            this.textEdit5.Location = new System.Drawing.Point(423, 108);
+            this.textEdit5.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.textEdit5.Name = "textEdit5";
-            this.textEdit5.Size = new System.Drawing.Size(204, 48);
+            this.textEdit5.Size = new System.Drawing.Size(68, 20);
             this.textEdit5.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.textEdit5.TabIndex = 11;
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(943, 471);
+            this.simpleButton1.Location = new System.Drawing.Point(342, 220);
+            this.simpleButton1.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(414, 54);
+            this.simpleButton1.Size = new System.Drawing.Size(149, 22);
             this.simpleButton1.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.simpleButton1.TabIndex = 12;
             this.simpleButton1.Text = "Traffic ICO details";
@@ -1813,13 +1816,35 @@ namespace Traffic_generator_WFA.Forms
             // 
             this.simpleButton2.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.simpleButton2.Appearance.BackColor2 = System.Drawing.Color.Transparent;
-            this.simpleButton2.Location = new System.Drawing.Point(943, 413);
+            this.simpleButton2.Appearance.Options.UseBackColor = true;
+            this.simpleButton2.Location = new System.Drawing.Point(342, 196);
+            this.simpleButton2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
             this.simpleButton2.Name = "simpleButton2";
-            this.simpleButton2.Size = new System.Drawing.Size(414, 54);
+            this.simpleButton2.Size = new System.Drawing.Size(149, 22);
             this.simpleButton2.StyleController = this.HomeControllayoutControl1ConvertedLayout;
             this.simpleButton2.TabIndex = 13;
             this.simpleButton2.Text = "Master account details";
             this.simpleButton2.Click += new System.EventHandler(this.simpleButton2_Click);
+            // 
+            // simpleButton3
+            // 
+            this.simpleButton3.Location = new System.Drawing.Point(342, 244);
+            this.simpleButton3.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.simpleButton3.Name = "simpleButton3";
+            this.simpleButton3.Size = new System.Drawing.Size(149, 22);
+            this.simpleButton3.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.simpleButton3.TabIndex = 14;
+            this.simpleButton3.Text = "Target ICO details";
+            this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
+            // 
+            // textEdit2
+            // 
+            this.textEdit2.Location = new System.Drawing.Point(423, 152);
+            this.textEdit2.Margin = new System.Windows.Forms.Padding(1, 1, 1, 1);
+            this.textEdit2.Name = "textEdit2";
+            this.textEdit2.Size = new System.Drawing.Size(68, 20);
+            this.textEdit2.StyleController = this.HomeControllayoutControl1ConvertedLayout;
+            this.textEdit2.TabIndex = 15;
             // 
             // layoutControlGroup2
             // 
@@ -1837,7 +1862,7 @@ namespace Traffic_generator_WFA.Forms
             this.simpleLabelItem1.Name = "simpleLabelItem1";
             this.simpleLabelItem1.Size = new System.Drawing.Size(110, 20);
             this.simpleLabelItem1.Text = "No. of accounts";
-            this.simpleLabelItem1.TextSize = new System.Drawing.Size(190, 31);
+            this.simpleLabelItem1.TextSize = new System.Drawing.Size(76, 13);
             // 
             // layoutControlGroup1
             // 
@@ -1849,7 +1874,7 @@ namespace Traffic_generator_WFA.Forms
             this.layoutControlItem5,
             this.layoutControlItem6});
             this.layoutControlGroup1.Name = "Root";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(1382, 647);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(501, 277);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // chartControl2item
@@ -1857,7 +1882,7 @@ namespace Traffic_generator_WFA.Forms
             this.chartControl2item.Control = this.chartControl2;
             this.chartControl2item.Location = new System.Drawing.Point(0, 0);
             this.chartControl2item.Name = "chartControl2item";
-            this.chartControl2item.Size = new System.Drawing.Size(918, 303);
+            this.chartControl2item.Size = new System.Drawing.Size(332, 130);
             this.chartControl2item.TextSize = new System.Drawing.Size(0, 0);
             this.chartControl2item.TextVisible = false;
             // 
@@ -1872,82 +1897,100 @@ namespace Traffic_generator_WFA.Forms
             this.layoutControlItem8,
             this.layoutControlItem1,
             this.layoutControlItem3});
-            this.layoutControlGroup3.Location = new System.Drawing.Point(918, 83);
+            this.layoutControlGroup3.Location = new System.Drawing.Point(332, 57);
             this.layoutControlGroup3.Name = "layoutControlGroup3";
-            this.layoutControlGroup3.Size = new System.Drawing.Size(444, 544);
+            this.layoutControlGroup3.Size = new System.Drawing.Size(161, 212);
             this.layoutControlGroup3.Text = "Traffic properties";
             this.layoutControlGroup3.TextLocation = DevExpress.Utils.Locations.Default;
-            // 
-            // layoutControlItem2
-            // 
-            this.layoutControlItem2.Control = this.textEdit1;
-            this.layoutControlItem2.Location = new System.Drawing.Point(0, 208);
-            this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(418, 52);
-            this.layoutControlItem2.Text = "Accounts ";
-            this.layoutControlItem2.TextSize = new System.Drawing.Size(207, 31);
-            // 
-            // layoutControlItem4
-            // 
-            this.layoutControlItem4.Control = this.textEdit3;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 104);
-            this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(418, 52);
-            this.layoutControlItem4.Text = "Capital ";
-            this.layoutControlItem4.TextSize = new System.Drawing.Size(207, 31);
-            // 
-            // layoutControlItem7
-            // 
-            this.layoutControlItem7.Control = this.textEdit4;
-            this.layoutControlItem7.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem7.Name = "layoutControlItem7";
-            this.layoutControlItem7.Size = new System.Drawing.Size(418, 52);
-            this.layoutControlItem7.Text = "Traffic ICO name";
-            this.layoutControlItem7.TextSize = new System.Drawing.Size(207, 31);
-            // 
-            // layoutControlItem8
-            // 
-            this.layoutControlItem8.Control = this.textEdit5;
-            this.layoutControlItem8.Location = new System.Drawing.Point(0, 52);
-            this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(418, 52);
-            this.layoutControlItem8.Text = "Traffic ICO code";
-            this.layoutControlItem8.TextLocation = DevExpress.Utils.Locations.Left;
-            this.layoutControlItem8.TextSize = new System.Drawing.Size(207, 31);
             // 
             // layoutControlItem9
             // 
             this.layoutControlItem9.Control = this.simpleButton1;
-            this.layoutControlItem9.Location = new System.Drawing.Point(0, 318);
+            this.layoutControlItem9.Location = new System.Drawing.Point(0, 134);
             this.layoutControlItem9.Name = "layoutControlItem9";
-            this.layoutControlItem9.Size = new System.Drawing.Size(418, 58);
+            this.layoutControlItem9.Size = new System.Drawing.Size(151, 24);
             this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem9.TextVisible = false;
             // 
             // layoutControlItem10
             // 
             this.layoutControlItem10.Control = this.simpleButton2;
-            this.layoutControlItem10.Location = new System.Drawing.Point(0, 260);
+            this.layoutControlItem10.Location = new System.Drawing.Point(0, 110);
             this.layoutControlItem10.Name = "layoutControlItem10";
-            this.layoutControlItem10.Size = new System.Drawing.Size(418, 58);
+            this.layoutControlItem10.Size = new System.Drawing.Size(151, 24);
             this.layoutControlItem10.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem10.TextVisible = false;
+            // 
+            // layoutControlItem4
+            // 
+            this.layoutControlItem4.Control = this.textEdit3;
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 44);
+            this.layoutControlItem4.Name = "layoutControlItem4";
+            this.layoutControlItem4.Size = new System.Drawing.Size(151, 22);
+            this.layoutControlItem4.Text = "Capital ";
+            this.layoutControlItem4.TextSize = new System.Drawing.Size(80, 13);
+            // 
+            // layoutControlItem2
+            // 
+            this.layoutControlItem2.Control = this.textEdit1;
+            this.layoutControlItem2.Location = new System.Drawing.Point(0, 88);
+            this.layoutControlItem2.Name = "layoutControlItem2";
+            this.layoutControlItem2.Size = new System.Drawing.Size(151, 22);
+            this.layoutControlItem2.Text = "Accounts ";
+            this.layoutControlItem2.TextSize = new System.Drawing.Size(80, 13);
+            // 
+            // layoutControlItem7
+            // 
+            this.layoutControlItem7.Control = this.textEdit4;
+            this.layoutControlItem7.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem7.Name = "layoutControlItem7";
+            this.layoutControlItem7.Size = new System.Drawing.Size(151, 22);
+            this.layoutControlItem7.Text = "Traffic ICO name";
+            this.layoutControlItem7.TextSize = new System.Drawing.Size(80, 13);
+            // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.textEdit5;
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 22);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(151, 22);
+            this.layoutControlItem8.Text = "Traffic ICO code";
+            this.layoutControlItem8.TextLocation = DevExpress.Utils.Locations.Left;
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(80, 13);
+            // 
+            // layoutControlItem1
+            // 
+            this.layoutControlItem1.Control = this.simpleButton3;
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 158);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.Size = new System.Drawing.Size(151, 24);
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem1.TextVisible = false;
+            // 
+            // layoutControlItem3
+            // 
+            this.layoutControlItem3.Control = this.textEdit2;
+            this.layoutControlItem3.Location = new System.Drawing.Point(0, 66);
+            this.layoutControlItem3.Name = "layoutControlItem3";
+            this.layoutControlItem3.Size = new System.Drawing.Size(151, 22);
+            this.layoutControlItem3.Text = "Decimals";
+            this.layoutControlItem3.TextSize = new System.Drawing.Size(80, 13);
             // 
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.chartControl1;
-            this.layoutControlItem5.Location = new System.Drawing.Point(0, 303);
+            this.layoutControlItem5.Location = new System.Drawing.Point(0, 130);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(918, 324);
+            this.layoutControlItem5.Size = new System.Drawing.Size(332, 139);
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
             // 
             // layoutControlItem6
             // 
             this.layoutControlItem6.Control = this.windowsUIButtonPanel1;
-            this.layoutControlItem6.Location = new System.Drawing.Point(918, 0);
+            this.layoutControlItem6.Location = new System.Drawing.Point(332, 0);
             this.layoutControlItem6.Name = "layoutControlItem6";
-            this.layoutControlItem6.Size = new System.Drawing.Size(444, 83);
+            this.layoutControlItem6.Size = new System.Drawing.Size(161, 57);
             this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem6.TextVisible = false;
             // 
@@ -1956,50 +1999,14 @@ namespace Traffic_generator_WFA.Forms
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
-            // simpleButton3
-            // 
-            this.simpleButton3.Location = new System.Drawing.Point(943, 529);
-            this.simpleButton3.Name = "simpleButton3";
-            this.simpleButton3.Size = new System.Drawing.Size(414, 40);
-            this.simpleButton3.StyleController = this.HomeControllayoutControl1ConvertedLayout;
-            this.simpleButton3.TabIndex = 14;
-            this.simpleButton3.Text = "Target ICO details";
-            this.simpleButton3.Click += new System.EventHandler(this.simpleButton3_Click);
-            // 
-            // layoutControlItem1
-            // 
-            this.layoutControlItem1.Control = this.simpleButton3;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 376);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(418, 97);
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem1.TextVisible = false;
-            // 
-            // textEdit2
-            // 
-            this.textEdit2.Location = new System.Drawing.Point(1153, 309);
-            this.textEdit2.Name = "textEdit2";
-            this.textEdit2.Size = new System.Drawing.Size(204, 48);
-            this.textEdit2.StyleController = this.HomeControllayoutControl1ConvertedLayout;
-            this.textEdit2.TabIndex = 15;
-            // 
-            // layoutControlItem3
-            // 
-            this.layoutControlItem3.Control = this.textEdit2;
-            this.layoutControlItem3.Location = new System.Drawing.Point(0, 156);
-            this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(418, 52);
-            this.layoutControlItem3.Text = "Decimals";
-            this.layoutControlItem3.TextSize = new System.Drawing.Size(207, 31);
-            // 
             // HomeControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.HomeControllayoutControl1ConvertedLayout);
-            this.Margin = new System.Windows.Forms.Padding(6, 4, 6, 4);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "HomeControl";
-            this.Size = new System.Drawing.Size(1382, 647);
+            this.Size = new System.Drawing.Size(518, 271);
             this.Load += new System.EventHandler(this.HomeControl_Load);
             ((System.ComponentModel.ISupportInitialize)(xyDiagram1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(stepAreaSeriesView1)).EndInit();
@@ -2034,22 +2041,22 @@ namespace Traffic_generator_WFA.Forms
             ((System.ComponentModel.ISupportInitialize)(this.textEdit3.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit4.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit5.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.simpleLabelItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chartControl2item)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textEdit2.Properties)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             this.ResumeLayout(false);
 
         }

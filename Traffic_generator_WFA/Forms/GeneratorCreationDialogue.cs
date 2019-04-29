@@ -70,14 +70,21 @@ namespace Traffic_generator_WFA.Forms
 
             if (noAccount.Text != "")
             {
-                Hide();
-                var token = (TokenContract)comboBox1.SelectedItem;
-                Program.init.contractProperties = token.Properties;
-                Program.init.accNo = int.Parse(noAccount.Text);
-                Program.init.trafficICO = token.Name;
+                if (Int32.Parse(noAccount.Text) >= 2 && Int32.Parse(noAccount.Text) <= 10000)
+                {
+                    Hide();
+                    var token = (TokenContract)comboBox1.SelectedItem;
+                    Program.init.contractProperties = token.Properties;
+                    Program.init.accNo = int.Parse(noAccount.Text);
+                    Program.init.trafficICO = token.Name;
 
-                Program.init.loading = true;
-                Program.init.mw.UpdateView(Program.init.mw.tagNum);
+                    Program.init.loading = true;
+                    Program.init.mw.UpdateView(Program.init.mw.tagNum);
+                }
+                else
+                {
+                    MessageBox.Show("Choose number of accounts between 2 and 10.000", "Number of accounts out of range", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
                 MessageBox.Show("One or more parameters are not filled!\n" +

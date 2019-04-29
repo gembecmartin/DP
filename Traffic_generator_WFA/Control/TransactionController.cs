@@ -11,6 +11,7 @@ using Nethereum.Util;
 using Nethereum.Web3;
 using Nethereum.Web3.Accounts.Managed;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -35,8 +36,8 @@ namespace Traffic_generator_WFA.Control
         public List<HistogramRecord> blockRangeHistogram = new List<HistogramRecord>();
         public List<HistogramRecord> transactionHistogram = new List<HistogramRecord>();
         public List<HistogramRecord> countHistogram = new List<HistogramRecord>();
-        public List<Range> generatedTransactionHistogram = new List<Range>();
-        public List<Range> generatedBlockHistogram = new List<Range>();
+        public BindingList<Range> generatedTransactionHistogram = new BindingList<Range>();
+        public BindingList<Range> generatedBlockHistogram = new BindingList<Range>();
         public List<Range> originalTransactionHistogram = new List<Range>();
         public List<Range> originalBlockHistogram = new List<Range>();
 
@@ -53,18 +54,6 @@ namespace Traffic_generator_WFA.Control
 
         public void TransactionSendingAsync(Web3 web3, string masterAcc, string walletContract, string passwd)
         {
-            //for(var x = 0; x <= 150000; x++)
-            //{
-            //    var blockCount = GetRandomBlockValue();
-            //    AddBlockToHistogram(blockCount);
-            //}
-
-            //for (var x = 0; x <= 200000; x++)
-            //{
-            //    var blockCount = GetRandomVolumeValue();
-            //    AddTransactionToHistogram(blockCount);
-            //}
-
             Random rand = new Random();
             int latestBlock = int.Parse(web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().GetAwaiter().GetResult().Value.ToString());
             var mainAccount = new ManagedAccount(masterAcc, passwd);
@@ -80,10 +69,11 @@ namespace Traffic_generator_WFA.Control
                     var newLatestBlock = int.Parse(web3.Eth.Blocks.GetBlockNumber.SendRequestAsync().GetAwaiter().GetResult().Value.ToString());    //get latest block
                     if (newLatestBlock != latestBlock)                                                                                              //if new block already kicked in...
                     {
-                        if (rand.NextDouble() <= 0.5) //blockPercentage)
+                        if (rand.NextDouble() <= 1) //blockPercentage)
                         {
                             var blockCount = GetRandomBlockValue();
                             AddBlockToHistogram(blockCount);
+                            Console.WriteLine("Inserting: " + blockCount);
                             for (int i = 0; i < blockCount; i++)
                             {
                                 var tx = GetRandomVolumeValue();
@@ -291,8 +281,8 @@ namespace Traffic_generator_WFA.Control
             var transactionRange = transactionList.Last().Amount - transactionList.First().Amount;
             var deviation = CalculateStdDev(transactionList, totalTx);
 
-            var binNumber2 = Math.Ceiling(transactionRange / (2 * interQuartile / Math.Pow(totalTx, 1 / 3.0)));      //Freedman–Diaconis`s rule
-            var binNumber = Math.Ceiling(transactionRange / (3.5 * deviation / Math.Pow(totalTx, 1 / 3.0)));      //Scott`s rule
+            var binNumber = Math.Ceiling(transactionRange / (2 * interQuartile / Math.Pow(totalTx, 1 / 3.0)));      //Freedman–Diaconis`s rule
+            var binNumber2 = Math.Ceiling(transactionRange / (3.5 * deviation / Math.Pow(totalTx, 1 / 3.0)));      //Scott`s rule
             var binNumber3 = Math.Ceiling(transactionRange / (1.06 * deviation / Math.Pow(totalTx, 1 / 5.0)));
 
             for (int i = 0; i < binNumber; i++)
@@ -477,7 +467,7 @@ namespace Traffic_generator_WFA.Control
             
             double value = randBlock.NextDouble() * (maximum - minimum) + minimum;
 
-            return Math.Round(value);
+            return Math.Ceiling(value);
         }
 
         public void SendTokens(string from, string to, double value)
@@ -562,6 +552,16 @@ namespace Traffic_generator_WFA.Control
             {
                 throw e;
             }
+        }
+
+        public BindingList<Range> returnTx()
+        {
+            return generatedTransactionHistogram;
+        }
+
+        public BindingList<Range> returnBlocks()
+        {
+            return generatedBlockHistogram;
         }
     }
 

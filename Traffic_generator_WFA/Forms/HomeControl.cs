@@ -1,6 +1,8 @@
 ﻿using DevExpress.XtraBars.Docking2010;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Windows.Forms;
 using Traffic_generator_WFA.Control;
 using Traffic_generator_WFA.Models;
@@ -11,6 +13,10 @@ namespace Traffic_generator_WFA.Forms
     {
         public bool trafficPlay = true;
         public bool trafficStop = false;
+
+        public BindingList<Models.Range> th = new BindingList<Models.Range>();
+        public BindingList<Models.Range> bh = new BindingList<Models.Range>();
+
         public HomeControl()
         {
             InitializeComponent();
@@ -42,30 +48,42 @@ namespace Traffic_generator_WFA.Forms
             }
         }
 
-        public void SetSeriesActual(List<Models.Range> tx_histogram, List<Models.Range> block_histogram)
+        public void SetSeriesActual()
         {
             try
             {
-                if (tx_histogram != null)
-                {
-                    chartControl2.Series.BeginUpdate();
-                    chartControl2.Series["Generated"].DataSource = tx_histogram;
-                    chartControl2.Series["Generated"].ArgumentDataMember = "FromValue";
-                    chartControl2.Series["Generated"].ValueDataMembers.AddRange(new string[] { "Count" });
-                }
-
-                if (block_histogram != null)
-                {
-                    chartControl1.Series.BeginUpdate();
-                    chartControl1.Series["Generated"].DataSource = block_histogram;
-                    chartControl1.Series["Generated"].ArgumentDataMember = "ToValue";
-                    chartControl1.Series["Generated"].ValueDataMembers.AddRange(new string[] { "Count" });
-                }
-
+                chartControl1.RefreshData();
+                chartControl2.RefreshData();
             }
-            finally
+            catch(Exception e)
             {
+                throw e;
+            }
+        }
+
+        public void InitSeries(BindingList<Range> th, BindingList<Range> bh)
+        {
+            try
+            {
+                this.th = new BindingList<Range>(th);
+                this.bh = new BindingList<Range>(bh);
+
+                chartControl2.Series.BeginUpdate();
+                chartControl2.Series["Generated"].DataSource = this.th;
+                chartControl2.Series["Generated"].ArgumentDataMember = "FromValue";
+                chartControl2.Series["Generated"].ValueDataMembers.AddRange(new string[] { "Count" });
+
+                chartControl1.Series.BeginUpdate();
+                chartControl1.Series["Generated"].DataSource = this.bh;
+                chartControl1.Series["Generated"].ArgumentDataMember = "ToValue";
+                chartControl1.Series["Generated"].ValueDataMembers.AddRange(new string[] { "Count" });
+
+                chartControl1.Series.EndUpdate();
                 chartControl2.Series.EndUpdate();
+            }
+            catch (Exception e)
+            {
+                throw e;
             }
         }
 
